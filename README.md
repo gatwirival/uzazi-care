@@ -63,5 +63,12 @@ http://localhost:3000
 This app provides educational guidance only and does not replace licensed medical diagnosis or treatment. For severe symptoms or emergencies, seek professional care immediately.
 
 ## Contribution README
+## Contributing
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Make changes and commit: `git commit -m "Add feature"`
+4. Push to your branch: `git push origin feature/your-feature`
+5. Open a pull request
 
 For full contribution workflow and standards, see [CONTRIBUTING.md](./CONTRIBUTING.md).
