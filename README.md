@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Afya Women Health Companion
+
+Afya is an AI-assisted web application built with Next.js and Node.js to support women through menstrual health, pregnancy, and postpartum recovery.
+
+## Features
+
+- AI Menstrual Assistant
+	- Period and cycle prediction
+	- Symptom tracking (cramps, mood swings, fatigue, bleeding)
+	- Personalized pain/PMS and nutrition guidance
+- Pregnancy & Childbirth Support
+	- Weekly tracking and baby development notes
+	- Pregnancy warning signs and hospital checklist
+- Postpartum Care Assistant
+	- Recovery guidance, mental health support prompts
+	- Breastfeeding and newborn care basics
+- AI Chat Health Companion
+	- Ask questions like: “Why is my period late?” or “Is this pain normal?”
+	- Safety-aware responses with escalation for danger signs
+- Emergency Warning System
+	- Detects high-risk symptoms (e.g., excessive bleeding, severe pain)
+	- Recommends immediate medical care when needed
+- Health Education Library
+	- Curated learning topics on menstrual health, pregnancy, newborn care, and mental health
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- Node.js runtime via Next.js route handlers
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available Scripts
 
-## Learn More
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-To learn more about Next.js, take a look at the following resources:
+## Safety Notice
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This app provides educational guidance only and does not replace licensed medical diagnosis or treatment. For severe symptoms or emergencies, seek professional care immediately.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contribution README
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For full contribution workflow and standards, see [CONTRIBUTING.md](./CONTRIBUTING.md).

@@ -1,64 +1,108 @@
-import Image from "next/image";
+import Link from "next/link";
+import { AppNav } from "@/components/app-nav";
+
+const pages = [
+  {
+    href: "/menstrual",
+    emoji: "🩸",
+    title: "AI Menstrual Assistant",
+    description: "Period tracking, cycle prediction, symptom logging, and PMS guidance.",
+    color: "from-rose-500 to-pink-500",
+    bg: "bg-rose-50",
+    border: "border-rose-200",
+  },
+  {
+    href: "/pregnancy",
+    emoji: "🤰",
+    title: "Pregnancy & Childbirth Support",
+    description: "Weekly development updates, warning signs, and hospital checklist.",
+    color: "from-emerald-500 to-teal-500",
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
+  },
+  {
+    href: "/postpartum",
+    emoji: "👶",
+    title: "Postpartum Care Assistant",
+    description: "Recovery tips, breastfeeding support, and mood check guidance.",
+    color: "from-violet-500 to-purple-500",
+    bg: "bg-violet-50",
+    border: "border-violet-200",
+  },
+  {
+    href: "/chat",
+    emoji: "💬",
+    title: "AI Chat Health Companion",
+    description: "Ask health questions and receive stage-based, safety-focused guidance.",
+    color: "from-blue-500 to-indigo-500",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
+  },
+  {
+    href: "/emergency",
+    emoji: "🚨",
+    title: "Emergency Warning System",
+    description: "Detect high-risk symptoms and get immediate care advice.",
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    border: "border-red-200",
+  },
+  {
+    href: "/education",
+    emoji: "📚",
+    title: "Health Education Library",
+    description: "Articles and guides on menstrual, pregnancy, postpartum, and mental health.",
+    color: "from-amber-500 to-yellow-500",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen" style={{ background: "var(--background)" }}>
+      <AppNav />
+
+      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-8">
+        {/* Hero */}
+        <section
+          className="mb-8 overflow-hidden rounded-3xl p-8 text-white shadow-lg"
+          style={{ background: "linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 60%, #e06fa0 100%)" }}
+        >
+          <p className="text-4xl">🌸</p>
+          <h1 className="mt-3 text-4xl font-bold tracking-tight">Uzazi Care</h1>
+          <p className="mt-2 max-w-xl text-pink-100">
+            Personalized AI-powered support for women — covering menstrual health, pregnancy,
+            postpartum recovery, emergency guidance, and education.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <p className="mt-4 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-medium">
+            ⚕️ Educational support only — seek immediate care for emergencies
+          </p>
+        </section>
+
+        {/* Feature cards */}
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {pages.map((page) => (
+            <Link
+              key={page.href}
+              href={page.href}
+              className={`group flex flex-col gap-3 rounded-2xl border p-5 transition-all hover:-translate-y-0.5 hover:shadow-md ${page.bg} ${page.border}`}
+            >
+              <div
+                className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br text-2xl text-white shadow-sm ${page.color}`}
+              >
+                {page.emoji}
+              </div>
+              <div>
+                <h2 className="font-semibold text-zinc-900">{page.title}</h2>
+                <p className="mt-1 text-sm leading-relaxed text-zinc-600">{page.description}</p>
+              </div>
+              <span className="mt-auto text-xs font-medium" style={{ color: "var(--brand)" }}>
+                Open →
+              </span>
+            </Link>
+          ))}
+        </section>
       </main>
     </div>
   );
