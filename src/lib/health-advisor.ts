@@ -6,6 +6,38 @@ export type AdviceResult = {
   seekCare: string[];
 };
 
+export type MenstrualPredictionInput = {
+  lastPeriodStartISO: string;
+  cycleLength: number;
+  periodLength: number;
+  reminderDaysBefore: number;
+};
+
+export type MenstrualPrediction = {
+  nextPeriodStart: string;
+  nextPeriodEnd: string;
+  predictedCycleLength: number;
+  ovulationDate: string;
+  ovulationWindowStart: string;
+  ovulationWindowEnd: string;
+  fertileDays: string[];
+  pmsStart: string;
+  pmsEnd: string;
+  reminderDate: string;
+};
+
+export type MenstrualSymptomLogEntry = {
+  dateISO: string;
+  symptoms: string[];
+};
+
+export type MenstrualSymptomPatternAnalysis = {
+  frequentSymptoms: string[];
+  patternNotes: string[];
+  careTips: string[];
+  seekCare: string[];
+};
+
 const pregnancyWeekHighlights: Record<number, string> = {
   4: "Implantation is complete and the neural tube starts forming.",
   8: "Major organs are forming and heartbeat is detectable on ultrasound.",
@@ -28,6 +60,66 @@ const emergencySymptoms = new Set([
   "seizure",
   "thoughts of self-harm",
 ]);
+
+function parseISODate(isoDate: string): Date | null {
+  if (!isoDate) return null;
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) return null;
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+function addDays(baseDate: Date, days: number): Date {
+  const next = new Date(baseDate);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function formatISODate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+export function buildMenstrualPrediction(input: MenstrualPredictionInput): MenstrualPrediction | null {
+  const startDate = parseISODate(input.lastPeriodStartISO);
+  if (!startDate) return null;
+
+  const cycleLength = Math.max(21, Math.min(40, Math.round(input.cycleLength || 28)));
+  const periodLength = Math.max(2, Math.min(10, Math.round(input.periodLength || 5)));
+  const reminderDaysBefore = Math.max(1, Math.min(10, Math.round(input.reminderDaysBefore || 2)));
+
+  const nextPeriodStart = addDays(startDate, cycleLength);
+  const nextPeriodEnd = addDays(nextPeriodStart, periodLength - 1);
+
+  const ovulationDate = addDays(nextPeriodStart, -14);
+  const ovulationWindowStart = addDays(ovulationDate, -1);
+  const ovulationWindowEnd = addDays(ovulationDate, 1);
+
+  const fertileStart = addDays(ovulationDate, -5);
+  const fertileEnd = addDays(ovulationDate, 1);
+  const fertileDays: string[] = [];
+  const cursor = new Date(fertileStart);
+  while (cursor <= fertileEnd) {
+    fertileDays.push(formatISODate(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  const pmsStart = addDays(nextPeriodStart, -5);
+  const pmsEnd = addDays(nextPeriodStart, -1);
+  const reminderDate = addDays(nextPeriodStart, -reminderDaysBefore);
+
+  return {
+    nextPeriodStart: formatISODate(nextPeriodStart),
+    nextPeriodEnd: formatISODate(nextPeriodEnd),
+    predictedCycleLength: cycleLength,
+    ovulationDate: formatISODate(ovulationDate),
+    ovulationWindowStart: formatISODate(ovulationWindowStart),
+    ovulationWindowEnd: formatISODate(ovulationWindowEnd),
+    fertileDays,
+    pmsStart: formatISODate(pmsStart),
+    pmsEnd: formatISODate(pmsEnd),
+    reminderDate: formatISODate(reminderDate),
+  };
+}
 
 export function predictNextCycle(lastPeriodISO: string, cycleLength = 28): string | null {
   if (!lastPeriodISO) return null;
@@ -64,6 +156,65 @@ export function getMenstrualAdvice(symptoms: string[], painLevel: number): Advic
   }
 
   return { advice, nutrition, seekCare };
+}
+
+export function analyzeMenstrualSymptomPatterns(
+  entries: MenstrualSymptomLogEntry[],
+): MenstrualSymptomPatternAnalysis {
+  const counts = new Map<string, number>();
+
+  for (const entry of entries) {
+    for (const symptom of entry.symptoms) {
+      const key = symptom.toLowerCase().trim();
+      if (!key) continue;
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+
+  const ranked = [...counts.entries()].sort((left, right) => right[1] - left[1]);
+  const frequentSymptoms = ranked.filter(([, count]) => count >= 2).map(([symptom]) => symptom);
+
+  const patternNotes: string[] = [];
+  if (entries.length === 0) {
+    patternNotes.push("Log symptoms over several days to unlock personalized pattern insights.");
+  } else {
+    patternNotes.push(`You have logged ${entries.length} symptom entries so far.`);
+    if (frequentSymptoms.length > 0) {
+      patternNotes.push(`Most repeated: ${frequentSymptoms.slice(0, 3).join(", ")}.`);
+    }
+  }
+
+  const careTips = [
+    "Track hydration, sleep, and stress alongside symptoms for clearer trend detection.",
+    "Use gentle movement and warm compresses on days with cramps or bloating.",
+  ];
+  const seekCare: string[] = [];
+
+  if (counts.has("cramps") || counts.has("severe cramps")) {
+    careTips.push("For recurring cramps, discuss pain control options with your clinician.");
+  }
+  if (counts.has("headaches") || counts.has("nausea")) {
+    careTips.push("Frequent headaches or nausea may improve with regular meals and hydration.");
+  }
+  if (counts.has("mood swings") || counts.has("fatigue")) {
+    careTips.push("Mood and fatigue patterns may improve with sleep routines and stress-reduction habits.");
+  }
+  if (counts.has("breast tenderness") || counts.has("bloating")) {
+    careTips.push("Limit excess salt and caffeine during PMS-prone days to reduce tenderness and bloating.");
+  }
+  if (counts.has("heavy bleeding")) {
+    seekCare.push("Seek urgent care for heavy bleeding that soaks a pad or tampon every hour.");
+  }
+  if (counts.has("severe cramps")) {
+    seekCare.push("Severe cramps that disrupt normal activities should be medically reviewed.");
+  }
+
+  return {
+    frequentSymptoms,
+    patternNotes,
+    careTips,
+    seekCare,
+  };
 }
 
 export function getPregnancyWeekInfo(week: number): string {
