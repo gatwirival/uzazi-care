@@ -30,6 +30,11 @@ export async function POST(request: NextRequest) {
       files = []
     } = body;
 
+    console.log('📥 RECEIVED REQUEST:');
+    console.log('Messages:', JSON.stringify(messages, null, 2));
+    console.log('Files count:', files.length);
+    console.log('Files:', files.map((f: any) => ({ name: f.name, type: f.type, hasContent: !!f.content })));
+
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json(
         { error: 'Messages array is required' },
@@ -126,57 +131,70 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Add user messages
-    chatMessages.push(...messages);
-
-    // If files are uploaded, add them to the context
+    // Process uploaded files BEFORE adding messages
+    let csvContext = '';
     if (files && files.length > 0) {
-      let filesContext = '\n\n=== UPLOADED MEDICAL RECORDS ===\n\n';
-      
       for (const file of files) {
         if (file.type === 'csv' && file.content) {
-          // Parse CSV content
-          filesContext += `File: ${file.name}\n`;
-          filesContext += `Type: CSV Medical Records\n\n`;
+          // CSV files - format for analysis
+          csvContext += `\n\n📊 UPLOADED FILE: ${file.name}\n`;
+          csvContext += `${'='.repeat(80)}\n`;
           
-          // Extract key information from CSV
-          const lines = file.content.split('\n').slice(0, 50); // First 50 lines
-          filesContext += `Content Preview:\n${lines.join('\n')}\n\n`;
+          // Parse CSV
+          const rows = file.content.split('\n').filter((row: string) => row.trim());
+          const headers = rows[0]?.split(',') || [];
           
-          // Try to extract summary statistics
-          try {
-            const rows = file.content.split('\n');
-            const headers = rows[0]?.split(',') || [];
-            filesContext += `Columns: ${headers.join(', ')}\n`;
-            filesContext += `Total Records: ${rows.length - 1}\n\n`;
-          } catch (e) {
-            // Ignore parsing errors
-          }
-        } else if (file.type === 'image') {
-          filesContext += `File: ${file.name}\n`;
-          filesContext += `Type: Medical Image\n`;
-          filesContext += `Note: ${file.message || 'Image uploaded - visual analysis requires additional configuration'}\n\n`;
-        } else if (file.content) {
-          filesContext += `File: ${file.name}\n`;
-          filesContext += `Content:\n${file.content.substring(0, 2000)}\n\n`;
+          csvContext += `\nCSV COLUMNS: ${headers.join(', ')}\n`;
+          csvContext += `TOTAL RECORDS: ${rows.length - 1}\n\n`;
+          
+          // Include full CSV data (limit to 200 rows for safety)
+          const dataRows = rows.slice(0, 201); // header + 200 data rows
+          csvContext += `CSV DATA:\n${dataRows.join('\n')}\n`;
+          
+          csvContext += `${'='.repeat(80)}\n`;
         }
       }
-      
-      filesContext += '======================\n\n';
-      filesContext += 'Please analyze the uploaded medical records above and provide insights based on the data.';
-      
-      // Add files context as a system message
-      chatMessages.push({
-        role: 'system',
-        content: filesContext,
-      });
     }
 
+    // Build final user message with CSV data
+    const userMessages = [...messages];
+    if (csvContext && userMessages.length > 0) {
+      const lastUserMsgIndex = userMessages.length - 1;
+      const originalQuestion = userMessages[lastUserMsgIndex].content;
+      
+      // Put question FIRST, then data
+      userMessages[lastUserMsgIndex] = {
+        ...userMessages[lastUserMsgIndex],
+        content: `${originalQuestion}${csvContext}\n\nBased on the CSV medical data above, please provide a detailed answer to my question.`
+      };
+    }
+    
+    chatMessages.push(...userMessages);
+
     // Stream the response
-    const stream = await streamChatCompletion(chatMessages, {
-      temperature: agentId === 'diabetic-doctor' ? 0.3 : 0.5,
-      maxTokens: 3000,
-    });
+    let stream;
+    try {
+      stream = await streamChatCompletion(chatMessages, {
+        temperature: agentId === 'diabetic-doctor' ? 0.3 : 0.5,
+        maxTokens: 3000,
+      });
+    } catch (error) {
+      // If streaming fails, create an error stream
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get AI response';
+      console.error('Streaming error:', errorMessage);
+      
+      stream = new ReadableStream({
+        start(controller) {
+          const errorChunk = `data: ${JSON.stringify({
+            type: 'error',
+            error: errorMessage
+          })}\n\n`;
+          controller.enqueue(new TextEncoder().encode(errorChunk));
+          controller.enqueue(new TextEncoder().encode('data: [DONE]\n\n'));
+          controller.close();
+        }
+      });
+    }
 
     // Create a TransformStream to process the SSE data
     const encoder = new TextEncoder();

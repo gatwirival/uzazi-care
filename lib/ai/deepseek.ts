@@ -75,8 +75,14 @@ export async function sendChatCompletion(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
-    throw new Error(`DeepSeek API error: ${error.error || response.statusText}`);
+    let errorMessage = response.statusText;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error?.message || errorData.message || JSON.stringify(errorData);
+    } catch (e) {
+      // If JSON parsing fails, use status text
+    }
+    throw new Error(`DeepSeek API error: ${errorMessage}`);
   }
 
   return response.json();
@@ -113,8 +119,14 @@ export async function streamChatCompletion(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
-    throw new Error(`DeepSeek API error: ${error.error || response.statusText}`);
+    let errorMessage = response.statusText;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error?.message || errorData.message || JSON.stringify(errorData);
+    } catch (e) {
+      // If JSON parsing fails, use status text
+    }
+    throw new Error(`DeepSeek API error: ${errorMessage}`);
   }
 
   if (!response.body) {

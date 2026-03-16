@@ -176,17 +176,43 @@ export default function ChatPage() {
                 content: text,
               };
             } else if (file.type.startsWith('image/')) {
-              // For images, we'll just include metadata for now
-              // In a full implementation, you'd use vision API or OCR
-              return {
-                name: file.name,
-                type: 'image',
-                size: file.size,
-                message: 'Image uploaded - visual analysis not yet implemented',
-              };
+              // For images, convert to base64
+              return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  const base64 = reader.result as string;
+                  // Remove data:image/...;base64, prefix
+                  const base64Data = base64.split(',')[1];
+                  resolve({
+                    name: file.name,
+                    type: 'image',
+                    mimeType: file.type,
+                    base64: base64Data,
+                    size: file.size,
+                  });
+                };
+                reader.readAsDataURL(file);
+              });
+            } else if (file.type === 'application/pdf') {
+              // PDFs can also be processed
+              return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  const base64 = reader.result as string;
+                  const base64Data = base64.split(',')[1];
+                  resolve({
+                    name: file.name,
+                    type: 'pdf',
+                    mimeType: file.type,
+                    base64: base64Data,
+                    size: file.size,
+                  });
+                };
+                reader.readAsDataURL(file);
+              });
             } else {
-              // Other file types
-              const text = await file.text();
+              // Other file types - try to read as text
+              const text = await file.text().catch(() => '');
               return {
                 name: file.name,
                 type: 'other',
@@ -247,21 +273,26 @@ export default function ChatPage() {
         if (done) break;
 
         const chunk = decoder.decode(value);
+        console.log('📦 Received chunk:', chunk);
         const lines = chunk.split("\n");
 
         for (const line of lines) {
           if (line.startsWith("data: ")) {
             const data = line.slice(6);
+            console.log('📨 Data line:', data);
 
             if (data === "[DONE]") {
+              console.log('✅ Stream complete');
               continue;
             }
 
             try {
               const parsed = JSON.parse(data);
+              console.log('📋 Parsed:', parsed);
               const content = parsed.choices?.[0]?.delta?.content;
 
               if (content) {
+                console.log('✍️ Content:', content);
                 assistantMessage += content;
                 // Update the assistant message in real-time
                 setMessages((prev) =>
@@ -273,6 +304,7 @@ export default function ChatPage() {
                 );
               }
             } catch (e) {
+              console.error('❌ JSON parse error:', e, 'Data:', data);
               // Skip invalid JSON
             }
           }
@@ -564,30 +596,26 @@ export default function ChatPage() {
                               : selectedAgentData?.name || "AI Doctor"}
                           </div>
                           <div className="prose prose-sm max-w-none">
-                            {message.content ? (
-                              <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                  // Custom components for better styling
-                                  p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
-                                  ul: ({ node, ...props }) => <ul className="list-disc ml-4 mb-2" {...props} />,
-                                  ol: ({ node, ...props }) => <ol className="list-decimal ml-4 mb-2" {...props} />,
-                                  li: ({ node, ...props }) => <li className="mb-1" {...props} />,
-                                  code: ({ node, inline, ...props }: any) =>
-                                    inline ? (
-                                      <code className="bg-gray-100 px-1 py-0.5 rounded text-sm" {...props} />
-                                    ) : (
-                                      <code className="block bg-gray-100 p-2 rounded my-2 overflow-x-auto" {...props} />
-                                    ),
-                                  strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
-                                  em: ({ node, ...props }) => <em className="italic" {...props} />,
-                                }}
-                              >
-                                {message.content}
-                              </ReactMarkdown>
-                            ) : (
-                              <span className="animate-pulse">Thinking...</span>
-                            )}
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                // Custom components for better styling
+                                p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                                ul: ({ node, ...props }) => <ul className="list-disc ml-4 mb-2" {...props} />,
+                                ol: ({ node, ...props }) => <ol className="list-decimal ml-4 mb-2" {...props} />,
+                                li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                                code: ({ node, inline, ...props }: any) =>
+                                  inline ? (
+                                    <code className="bg-gray-100 px-1 py-0.5 rounded text-sm" {...props} />
+                                  ) : (
+                                    <code className="block bg-gray-100 p-2 rounded my-2 overflow-x-auto" {...props} />
+                                  ),
+                                strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
+                                em: ({ node, ...props }) => <em className="italic" {...props} />,
+                              }}
+                            >
+                              {message.content || ""}
+                            </ReactMarkdown>
                           </div>
                           <div className="text-xs opacity-70 mt-2">
                             {message.timestamp.toLocaleTimeString()}

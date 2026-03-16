@@ -1,5 +1,6 @@
 /**
- * AI-Powered Medical Report Generation Service
+ * AI-Powered Medical Report Generator
+ * 
  * Uses DeepSeek API with specialized prompts for different report types
  */
 
