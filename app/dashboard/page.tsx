@@ -2,7 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Users, FileText, Brain, TrendingUp, Activity, Clock, ArrowRight, Sparkles } from "lucide-react";
+import { Users, FileText, MessageSquare, TrendingUp, Clock, ArrowRight, ArrowUpRight } from "lucide-react";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -26,243 +26,273 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-3xl blur-3xl"></div>
-        <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl border border-gray-200 p-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">
-                <span className="bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                  Welcome back, {session.user.name?.split(' ')[0]}! 👋
-                </span>
-              </h1>
-              <p className="text-gray-600 text-lg">
-                Here's what's happening with your patients today
-              </p>
-            </div>
-            <div className="hidden lg:block">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur opacity-25"></div>
-                <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-xl text-white">
-                  <Sparkles className="h-8 w-8" />
-                </div>
-              </div>
-            </div>
+    <div className="space-y-10" style={{ color: "#1C100F" }}>
+
+      {/* Welcome */}
+      <div
+        className="rounded-2xl p-8"
+        style={{ backgroundColor: "#F5E4DC", border: "1px solid rgba(107,39,55,0.12)" }}
+      >
+        <div className="flex items-start justify-between gap-6">
+          <div>
+            <p
+              className="text-xs font-bold uppercase mb-3"
+              style={{ color: "#C1614A", letterSpacing: "0.2em" }}
+            >
+              Welcome back
+            </p>
+            <h1
+              className="font-display font-black leading-none mb-3"
+              style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.025em", color: "#1C100F" }}
+            >
+              {session.user.name?.split(" ")[0]}
+            </h1>
+            <p style={{ color: "#7A5C58", fontWeight: 300 }}>
+              Here&apos;s an overview of your patients and care activity today.
+            </p>
+          </div>
+          <div
+            className="hidden lg:flex items-center justify-center flex-shrink-0 rounded-2xl font-display font-black"
+            style={{
+              width: "80px",
+              height: "80px",
+              backgroundColor: "#6B2737",
+              color: "#FDFAF5",
+              fontSize: "2rem",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            {session.user.name?.[0]?.toUpperCase() ?? "U"}
           </div>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Patients Card */}
-        <div className="group relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-200"></div>
-          <div className="relative bg-white rounded-2xl border border-gray-200 p-6 hover:border-blue-500:border-blue-500 transition-all">
-            <div className="flex items-center justify-between mb-4">
-              <div className="bg-gradient-to-br from-blue-500 to-indigo-500 w-12 h-12 rounded-xl flex items-center justify-center">
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <div className="flex items-center text-sm text-green-600">
-                <TrendingUp className="h-4 w-4 mr-1" />
-                <span>12.5%</span>
-              </div>
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {[
+          {
+            label: "Total Patients",
+            value: patientCount,
+            sub: "Under your care",
+            icon: "👩‍⚕️",
+            accent: "#6B2737",
+            bg: "#F5E4DC",
+          },
+          {
+            label: "Health Records",
+            value: fileCount,
+            sub: "Files uploaded",
+            icon: "📋",
+            accent: "#C1614A",
+            bg: "#FDF3EE",
+          },
+          {
+            label: "AI Analyses",
+            value: inferenceCount,
+            sub: "Insights generated",
+            icon: "✨",
+            accent: "#6B2737",
+            bg: "#F5E4DC",
+          },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            className="rounded-2xl p-6"
+            style={{ backgroundColor: stat.bg, border: "1px solid rgba(107,39,55,0.1)" }}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <span className="text-3xl">{stat.icon}</span>
+              <TrendingUp className="h-4 w-4" style={{ color: stat.accent }} />
             </div>
-            <div>
-              <p className="text-sm text-gray-600 mb-1">
-                Total Patients
-              </p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">
-                {patientCount}
-              </p>
-              <p className="text-xs text-gray-500">
-                Active in your care
-              </p>
-            </div>
+            <p
+              className="font-black leading-none mb-1"
+              style={{ fontSize: "2.5rem", color: stat.accent, fontFamily: "'Playfair Display', serif" }}
+            >
+              {stat.value}
+            </p>
+            <p className="text-sm font-semibold" style={{ color: "#1C100F" }}>{stat.label}</p>
+            <p className="text-xs" style={{ color: "#7A5C58" }}>{stat.sub}</p>
           </div>
-        </div>
-
-        {/* Files Card */}
-        <div className="group relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-green-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-200"></div>
-          <div className="relative bg-white rounded-2xl border border-gray-200 p-6 hover:border-green-500:border-green-500 transition-all">
-            <div className="flex items-center justify-between mb-4">
-              <div className="bg-gradient-to-br from-green-500 to-teal-500 w-12 h-12 rounded-xl flex items-center justify-center">
-                <FileText className="h-6 w-6 text-white" />
-              </div>
-              <div className="flex items-center text-sm text-blue-600">
-                <Activity className="h-4 w-4 mr-1" />
-                <span>Active</span>
-              </div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 mb-1">
-                Files Uploaded
-              </p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">
-                {fileCount}
-              </p>
-              <p className="text-xs text-gray-500">
-                Medical records stored
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* AI Analyses Card */}
-        <div className="group relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-200"></div>
-          <div className="relative bg-white rounded-2xl border border-gray-200 p-6 hover:border-purple-500:border-purple-500 transition-all">
-            <div className="flex items-center justify-between mb-4">
-              <div className="bg-gradient-to-br from-purple-500 to-pink-500 w-12 h-12 rounded-xl flex items-center justify-center">
-                <Brain className="h-6 w-6 text-white" />
-              </div>
-              <div className="flex items-center text-sm text-purple-600">
-                <Sparkles className="h-4 w-4 mr-1" />
-                <span>AI Powered</span>
-              </div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 mb-1">
-                AI Analyses
-              </p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">
-                {inferenceCount}
-              </p>
-              <p className="text-xs text-gray-500">
-                Insights generated
-              </p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link
-          href="/dashboard/patients/new"
-          className="group relative overflow-hidden rounded-xl border border-gray-200 hover:border-blue-500:border-blue-500 bg-white p-6 transition-all hover:shadow-lg"
+      <div>
+        <p
+          className="text-xs font-bold uppercase mb-5"
+          style={{ color: "#7A5C58", letterSpacing: "0.18em" }}
         >
-          <div className="flex items-center space-x-4">
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <Users className="h-6 w-6 text-blue-600" />
+          Quick actions
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link
+            href="/dashboard/patients/new"
+            className="group flex items-center justify-between p-5 rounded-xl transition-all hover:shadow-sm"
+            style={{ backgroundColor: "#FDFAF5", border: "1px solid rgba(107,39,55,0.12)" }}
+          >
+            <div className="flex items-center gap-4">
+              <div
+                className="flex items-center justify-center w-11 h-11 rounded-xl text-xl"
+                style={{ backgroundColor: "#F5E4DC" }}
+              >
+                👤
+              </div>
+              <div>
+                <p className="font-semibold text-sm" style={{ color: "#1C100F" }}>Add Patient</p>
+                <p className="text-xs" style={{ color: "#7A5C58" }}>Create new record</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Add Patient</h3>
-              <p className="text-sm text-gray-600">Create new patient record</p>
-            </div>
-          </div>
-          <ArrowRight className="absolute right-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
-        </Link>
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              style={{ color: "#6B2737" }}
+            />
+          </Link>
 
-        <Link
-          href="/dashboard/files/upload"
-          className="group relative overflow-hidden rounded-xl border border-gray-200 hover:border-green-500:border-green-500 bg-white p-6 transition-all hover:shadow-lg"
-        >
-          <div className="flex items-center space-x-4">
-            <div className="bg-green-100 p-3 rounded-lg">
-              <FileText className="h-6 w-6 text-green-600" />
+          <Link
+            href="/dashboard/files/upload"
+            className="group flex items-center justify-between p-5 rounded-xl transition-all hover:shadow-sm"
+            style={{ backgroundColor: "#FDFAF5", border: "1px solid rgba(107,39,55,0.12)" }}
+          >
+            <div className="flex items-center gap-4">
+              <div
+                className="flex items-center justify-center w-11 h-11 rounded-xl text-xl"
+                style={{ backgroundColor: "#F5E4DC" }}
+              >
+                📁
+              </div>
+              <div>
+                <p className="font-semibold text-sm" style={{ color: "#1C100F" }}>Upload Record</p>
+                <p className="text-xs" style={{ color: "#7A5C58" }}>Add health file</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Upload File</h3>
-              <p className="text-sm text-gray-600">Add medical records</p>
-            </div>
-          </div>
-          <ArrowRight className="absolute right-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-hover:text-green-600 group-hover:translate-x-1 transition-all" />
-        </Link>
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              style={{ color: "#6B2737" }}
+            />
+          </Link>
 
-        <Link
-          href="/dashboard/chat"
-          className="group relative overflow-hidden rounded-xl border border-gray-200 hover:border-purple-500:border-purple-500 bg-white p-6 transition-all hover:shadow-lg"
-        >
-          <div className="flex items-center space-x-4">
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <Brain className="h-6 w-6 text-purple-600" />
+          <Link
+            href="/dashboard/chat"
+            className="group flex items-center justify-between p-5 rounded-xl transition-all hover:shadow-sm"
+            style={{ backgroundColor: "#6B2737", border: "1px solid #6B2737" }}
+          >
+            <div className="flex items-center gap-4">
+              <div
+                className="flex items-center justify-center w-11 h-11 rounded-xl text-xl"
+                style={{ backgroundColor: "rgba(253,250,245,0.15)" }}
+              >
+                💬
+              </div>
+              <div>
+                <p className="font-semibold text-sm" style={{ color: "#FDFAF5" }}>AI Health Chat</p>
+                <p className="text-xs" style={{ color: "rgba(253,250,245,0.6)" }}>Ask your AI assistant</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-1">AI Assistant</h3>
-              <p className="text-sm text-gray-600">Chat with AI doctor</p>
-            </div>
-          </div>
-          <ArrowRight className="absolute right-6 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
-        </Link>
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              style={{ color: "rgba(253,250,245,0.7)" }}
+            />
+          </Link>
+        </div>
       </div>
 
       {/* Recent Patients */}
-      <div className="relative">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 rounded-2xl blur"></div>
-        <div className="relative bg-white rounded-2xl border border-gray-200 overflow-hidden">
-          <div className="p-6 border-b border-gray-200 flex justify-between items-center">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-                <Clock className="h-6 w-6 mr-2 text-blue-600" />
-                Recent Patients
-              </h2>
-              <p className="text-sm text-gray-600 mt-1">
-                Your most recently added patients
-              </p>
-            </div>
-            <Link
-              href="/dashboard/patients"
-              className="group flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100:bg-blue-950 transition-all font-medium"
+      <div
+        className="rounded-2xl overflow-hidden"
+        style={{ border: "1px solid rgba(107,39,55,0.12)" }}
+      >
+        {/* Header */}
+        <div
+          className="px-6 py-5 flex items-center justify-between"
+          style={{ borderBottom: "1px solid rgba(107,39,55,0.1)", backgroundColor: "#FDFAF5" }}
+        >
+          <div>
+            <p
+              className="text-xs font-bold uppercase mb-1"
+              style={{ color: "#C1614A", letterSpacing: "0.18em" }}
             >
-              <span>View all</span>
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              Recent
+            </p>
+            <h2
+              className="font-display font-bold"
+              style={{ fontSize: "1.35rem", color: "#1C100F", letterSpacing: "-0.02em" }}
+            >
+              Patients
+            </h2>
           </div>
-          <div className="divide-y divide-gray-200">
-            {recentPatients.length === 0 ? (
-              <div className="p-12 text-center">
-                <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-gray-400" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  No patients yet
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Get started by adding your first patient
-                </p>
-                <Link
-                  href="/dashboard/patients/new"
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all font-semibold"
-                >
-                  <Users className="h-5 w-5 mr-2" />
-                  Add Patient
-                </Link>
+          <Link
+            href="/dashboard/patients"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold"
+            style={{ color: "#6B2737" }}
+          >
+            View all <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        {/* List */}
+        <div style={{ backgroundColor: "#FDFAF5" }}>
+          {recentPatients.length === 0 ? (
+            <div className="py-16 flex flex-col items-center text-center px-6">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-4"
+                style={{ backgroundColor: "#F5E4DC" }}
+              >
+                👩‍⚕️
               </div>
-            ) : (
-              recentPatients.map((patient) => (
-                <Link
-                  key={patient.id}
-                  href={`/dashboard/patients/${patient.id}`}
-                  className="p-6 hover:bg-gray-50:bg-slate-700/50 block transition-all group"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="bg-gradient-to-br from-blue-500 to-indigo-500 w-12 h-12 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">
-                          {patient.name[0].toUpperCase()}
-                        </span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600:text-blue-400 transition-colors">
-                          {patient.name}
-                        </h3>
-                        <p className="text-sm text-gray-600 flex items-center">
-                          <Clock className="h-3 w-3 mr-1" />
-                          Added {new Date(patient.createdAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+              <h3 className="font-semibold mb-2" style={{ color: "#1C100F" }}>
+                No patients yet
+              </h3>
+              <p className="text-sm mb-6" style={{ color: "#7A5C58" }}>
+                Get started by adding your first patient
+              </p>
+              <Link
+                href="/dashboard/patients/new"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm"
+                style={{ backgroundColor: "#6B2737", color: "#FDFAF5" }}
+              >
+                <Users className="h-4 w-4" />
+                Add Patient
+              </Link>
+            </div>
+          ) : (
+            recentPatients.map((patient, i) => (
+              <Link
+                key={patient.id}
+                href={`/dashboard/patients/${patient.id}`}
+                className="group flex items-center justify-between px-6 py-4 transition-colors"
+                style={{
+                  borderBottom: i < recentPatients.length - 1 ? "1px solid rgba(107,39,55,0.08)" : "none",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#FDF5F0")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center font-bold font-display text-sm flex-shrink-0"
+                    style={{ backgroundColor: "#6B2737", color: "#FDFAF5" }}
+                  >
+                    {patient.name[0].toUpperCase()}
                   </div>
-                </Link>
-              ))
-            )}
-          </div>
+                  <div>
+                    <p className="font-medium text-sm" style={{ color: "#1C100F" }}>
+                      {patient.name}
+                    </p>
+                    <p className="text-xs flex items-center gap-1" style={{ color: "#7A5C58" }}>
+                      <Clock className="h-3 w-3" />
+                      Added {new Date(patient.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  style={{ color: "#C1614A" }}
+                />
+              </Link>
+            ))
+          )}
         </div>
       </div>
+
     </div>
   );
 }

@@ -92,92 +92,76 @@ export default function UpgradeOverlay({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
-      <div className="relative mx-4 max-w-2xl w-full">
-        {/* Blurred background effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-blue-900/90 to-indigo-900/90 backdrop-blur-xl rounded-2xl" />
-        
-        {/* Content */}
-        <div className="relative p-8 md:p-12">
-          {/* Lock Icon */}
-          <div className="flex justify-center mb-6">
-            <div className="p-4 bg-gradient-to-br from-orange-500 to-red-600 rounded-full">
-              <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: "rgba(28,16,15,0.65)", backdropFilter: "blur(8px)" }}>
+      <div className="relative mx-4 max-w-lg w-full rounded-2xl overflow-hidden" style={{ backgroundColor: "#FDFAF5", border: "1px solid rgba(107,39,55,0.15)" }}>
+        <div className="p-8 md:p-10">
+
+          <div className="mb-8">
+            <p className="text-xs font-bold uppercase mb-2" style={{ color: "#C1614A", letterSpacing: "0.2em" }}>Subscription Required</p>
+            <h2 className="font-display font-black leading-tight" style={{ fontSize: "clamp(1.6rem,4vw,2.5rem)", color: "#6B2737", letterSpacing: "-0.025em" }}>
+              Activate your
+              <br />
+              <em>care plan.</em>
+            </h2>
           </div>
 
-          {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
-            Upgrade to Access Features
-          </h2>
-          
-          {/* Subtitle for Hospital Admin */}
-          <p className="text-center text-blue-300 mb-6 font-medium">
-            Hospital Administrator Access
-          </p>
-
-          {/* Subscription Status */}
-          <div className="bg-white/10 rounded-lg p-4 mb-6">
+          <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: "#F5E4DC", border: "1px solid rgba(107,39,55,0.12)" }}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-300">Hospital:</span>
-              <span className="text-white font-semibold">{hospitalName}</span>
+              <span className="text-sm" style={{ color: "#7A5C58" }}>Clinic:</span>
+              <span className="text-sm font-semibold" style={{ color: "#1C100F" }}>{hospitalName}</span>
             </div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-300">Status:</span>
-              <span className={`font-semibold ${
-                subscriptionStatus === 'ACTIVE' ? 'text-green-400' :
-                subscriptionStatus === 'TRIAL' ? 'text-yellow-400' :
-                subscriptionStatus === 'EXPIRED' ? 'text-red-400' :
-                'text-gray-400'
+              <span className="text-sm" style={{ color: "#7A5C58" }}>Status:</span>
+              <span className={`text-sm font-bold ${
+                subscriptionStatus === 'ACTIVE' ? 'text-green-600' :
+                subscriptionStatus === 'EXPIRED' ? 'text-red-600' :
+                'text-orange-600'
               }`}>
                 {subscriptionStatus}
               </span>
             </div>
             {nextBillingDate && (
               <div className="flex items-center justify-between">
-                <span className="text-gray-300">Next Billing:</span>
-                <span className="text-white">{new Date(nextBillingDate).toLocaleDateString()}</span>
+                <span className="text-sm" style={{ color: "#7A5C58" }}>Next Billing:</span>
+                <span className="text-sm" style={{ color: "#1C100F" }}>{new Date(nextBillingDate).toLocaleDateString()}</span>
               </div>
             )}
           </div>
 
-          {/* Description */}
-          <p className="text-center text-gray-300 mb-8">
+          <p className="text-sm mb-6 leading-relaxed" style={{ color: "#7A5C58", fontWeight: 300 }}>
             Your subscription has {subscriptionStatus === 'EXPIRED' ? 'expired' : 'not been activated'}. 
             Please complete the payment to access all features and continue managing patient data.
           </p>
 
           {success ? (
-            <div className="bg-green-500/20 border border-green-500 rounded-lg p-6 mb-6">
+            <div className="rounded-xl p-5 mb-6" style={{ backgroundColor: "#F5E4DC", border: "1px solid rgba(107,39,55,0.15)" }}>
               <div className="flex items-center mb-3">
                 <svg className="w-6 h-6 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-lg font-semibold text-green-400">Payment Request Sent!</h3>
+                <h3 className="text-base font-semibold" style={{ color: "#6B2737" }}>Payment Request Sent!</h3>
               </div>
-              <p className="text-green-300 mb-2">
+              <p className="text-sm mb-2" style={{ color: "#7A5C58" }}>
                 Check your phone for the M-Pesa prompt and enter your PIN to complete the payment.
               </p>
-              <p className="text-green-300 text-sm">
+              <p className="text-xs" style={{ color: "#7A5C58" }}>
                 Waiting for payment confirmation...
               </p>
               <div className="mt-4 flex justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-400"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: "#6B2737" }}></div>
               </div>
             </div>
           ) : (
             <form onSubmit={handlePayment} className="space-y-6">
               {error && (
-                <div className="bg-red-500/20 border border-red-500 rounded-lg p-4">
-                  <p className="text-red-300 text-sm">{error}</p>
+                <div className="rounded-xl p-4 mb-4" style={{ backgroundColor: "#FEE2E2", border: "1px solid #FECACA" }}>
+                  <p className="text-red-700 text-sm">{error}</p>
                 </div>
               )}
 
               {/* Payment Form */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium mb-2" style={{ color: "#1C100F" }}>
                   M-Pesa Phone Number
                 </label>
                 <input
@@ -185,29 +169,30 @@ export default function UpgradeOverlay({
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="0712345678 or +254712345678"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-xl text-sm transition-all focus:outline-none"
+                  style={{ backgroundColor: "#F5E4DC", border: "1px solid rgba(107,39,55,0.2)", color: "#1C100F" }}
                   required
                   disabled={loading}
                 />
-                <p className="mt-2 text-xs text-gray-400">
+                  <p className="mt-2 text-xs" style={{ color: "#7A5C58" }}>
                   You will receive an STK push prompt on this number
                 </p>
               </div>
 
-              {/* Amount */}
-              <div className="bg-white/10 rounded-lg p-4">
+              <div className="rounded-xl p-4" style={{ backgroundColor: "#F5E4DC", border: "1px solid rgba(107,39,55,0.12)" }}>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-300">Amount:</span>
-                  <span className="text-2xl font-bold text-white">KES 1.00</span>
+                  <span className="text-sm" style={{ color: "#7A5C58" }}>Amount:</span>
+                  <span className="text-2xl font-bold font-display" style={{ color: "#6B2737" }}>KES 1.00</span>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">Sandbox test amount</p>
+                <p className="text-xs mt-1" style={{ color: "#7A5C58" }}>Sandbox test amount</p>
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading || !phoneNumber}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105"
+                className="w-full py-4 px-6 rounded-full font-semibold text-sm transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ backgroundColor: "#6B2737", color: "#FDFAF5" }}
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -224,9 +209,8 @@ export default function UpgradeOverlay({
             </form>
           )}
 
-          {/* Footer */}
-          <div className="mt-8 text-center text-gray-400 text-sm">
-            <p>Need help? Contact support at support@clinintelai.com</p>
+          <div className="mt-6 pt-5 text-center" style={{ borderTop: "1px solid rgba(107,39,55,0.1)" }}>
+            <p className="text-xs" style={{ color: "#7A5C58" }}>Need help? Contact support at support@uzazicare.com</p>
           </div>
         </div>
       </div>
