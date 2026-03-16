@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { authConfig } from "./auth.config";
 
 // Dynamic import to avoid bundling Prisma in edge runtime
 async function getUserByEmail(email: string) {
@@ -25,6 +26,7 @@ async function verifyPassword(password: string, hash: string) {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -85,31 +87,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-        token.hospitalId = user.hospitalId;
-        token.subscriptionStatus = user.subscriptionStatus;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-        session.user.hospitalId = token.hospitalId as string;
-        session.user.subscriptionStatus = token.subscriptionStatus as string;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
-  },
-  session: {
-    strategy: "jwt",
-  },
 });
