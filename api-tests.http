@@ -1,0 +1,123 @@
+### ClinIntelAI API Testing
+### Use with REST Client extension in VS Code
+
+@baseUrl = http://localhost:3000/api
+@email = doctor@example.com
+@password = password123
+
+### 1. Register a new doctor
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Dr. John Smith",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### 2. Login (use credentials from register or existing user)
+# @name login
+POST http://localhost:3000/api/auth/[...nextauth]
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###  3. Get all patients (requires authentication)
+GET {{baseUrl}}/patients
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 4. Create a new patient
+POST {{baseUrl}}/patients
+Content-Type: application/json
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "phone": "+1-555-123-4567",
+  "dateOfBirth": "1985-03-15",
+  "gender": "FEMALE",
+  "medicalRecordNumber": "MRN-12345",
+  "notes": "Patient has history of diabetes"
+}
+
+### 5. Get a specific patient
+@patientId = PATIENT_ID_HERE
+GET {{baseUrl}}/patients/{{patientId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 6. Update a patient
+PATCH {{baseUrl}}/patients/{{patientId}}
+Content-Type: application/json
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+{
+  "name": "Jane Doe Updated",
+  "notes": "Updated patient information"
+}
+
+### 7. Get all files
+GET {{baseUrl}}/files
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 8. Get all files for a specific patient
+GET {{baseUrl}}/files?patientId={{patientId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 9. Upload a file (Note: Use form-data, this is just a template)
+# For file upload, use the UI or a tool like Postman/Insomnia
+POST {{baseUrl}}/files
+Content-Type: multipart/form-data
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+# FormData:
+# - file: [your file]
+# - patientId: {{patientId}}
+
+### 10. Get a specific file
+@fileId = FILE_ID_HERE
+GET {{baseUrl}}/files/{{fileId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 11. Analyze a file
+POST {{baseUrl}}/analyze
+Content-Type: application/json
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+{
+  "fileId": "{{fileId}}",
+  "inferenceType": "csv-analysis",
+  "inputData": {
+    "columns": ["column1", "column2"]
+  }
+}
+
+### 12. Get all inferences
+GET {{baseUrl}}/analyze
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 13. Get inferences for a specific patient
+GET {{baseUrl}}/analyze?patientId={{patientId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 14. Get inferences for a specific file
+GET {{baseUrl}}/analyze?fileId={{fileId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 15. Delete a patient
+DELETE {{baseUrl}}/patients/{{patientId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+### 16. Delete a file
+DELETE {{baseUrl}}/files/{{fileId}}
+Cookie: next-auth.session-token=YOUR_SESSION_TOKEN_HERE
+
+###
+### NOTES:
+### - Replace YOUR_SESSION_TOKEN_HERE with actual session token from browser cookies
+### - Replace PATIENT_ID_HERE and FILE_ID_HERE with actual IDs from responses
+### - For better testing, use the UI at http://localhost:3000
+###

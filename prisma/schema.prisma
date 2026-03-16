@@ -1,0 +1,126 @@
+// ClinIntelAI Database Schema
+// Prisma schema for medical data management platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Users table (Doctors and Admins)
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  name         String
+  role         UserRole  @default(DOCTOR)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  patients   Patient[]
+  files      File[]
+
+  @@index([email])
+  @@map("users")
+}
+
+enum UserRole {
+  DOCTOR
+  ADMIN
+}
+
+// Patients table
+model Patient {
+  id                  String    @id @default(uuid())
+  doctorId            String    @map("doctor_id")
+  name                String
+  email               String?
+  phone               String?
+  dateOfBirth         DateTime? @map("date_of_birth") @db.Date
+  gender              Gender?
+  medicalRecordNumber String?   @map("medical_record_number")
+  notes               String?   @db.Text
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  doctor     User        @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  files      File[]
+  inferences Inference[]
+
+  @@index([doctorId])
+  @@map("patients")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+// Files table (CSV, images, etc.)
+model File {
+  id         String     @id @default(uuid())
+  patientId  String     @map("patient_id")
+  doctorId   String     @map("doctor_id")
+  fileName   String     @map("file_name")
+  filePath   String     @map("file_path")
+  fileType   String     @map("file_type")
+  fileSize   Int        @map("file_size")
+  uploadDate DateTime   @default(now()) @map("upload_date")
+  status     FileStatus @default(UPLOADED)
+  metadata   Json?
+  createdAt  DateTime   @default(now()) @map("created_at")
+
+  // Relations
+  patient    Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor     User        @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  inferences Inference[]
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@map("files")
+}
+
+enum FileStatus {
+  UPLOADED
+  PROCESSING
+  ANALYZED
+  ERROR
+}
+
+// Inferences table (AI analysis results)
+model Inference {
+  id               String          @id @default(uuid())
+  fileId           String          @map("file_id")
+  patientId        String          @map("patient_id")
+  inferenceType    String          @map("inference_type")
+  inputData        Json?           @map("input_data")
+  outputData       Json?           @map("output_data")
+  confidenceScore  Decimal?        @map("confidence_score") @db.Decimal(5, 4)
+  status           InferenceStatus @default(PENDING)
+  errorMessage     String?         @map("error_message") @db.Text
+  processingTimeMs Int?            @map("processing_time_ms")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  file    File    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([fileId])
+  @@index([patientId])
+  @@map("inferences")
+}
+
+enum InferenceStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
