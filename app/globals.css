@@ -28,6 +28,25 @@ body {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
+/* Sidebar nav links - hover handled via CSS to avoid Server Component event handler errors */
+.nav-link {
+  color: #7A5C58;
+  background-color: transparent;
+  transition: background-color 0.15s, color 0.15s;
+}
+.nav-link:hover {
+  background-color: #F5E4DC;
+  color: #6B2737;
+}
+
+/* Patient row hover in server-rendered lists */
+.patient-row-link {
+  transition: background-color 0.15s;
+}
+.patient-row-link:hover {
+  background-color: #FDF5F0;
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

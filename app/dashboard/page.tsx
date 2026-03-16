@@ -259,12 +259,10 @@ export default async function DashboardPage() {
               <Link
                 key={patient.id}
                 href={`/dashboard/patients/${patient.id}`}
-                className="group flex items-center justify-between px-6 py-4 transition-colors"
+                className="patient-row-link group flex items-center justify-between px-6 py-4"
                 style={{
                   borderBottom: i < recentPatients.length - 1 ? "1px solid rgba(107,39,55,0.08)" : "none",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#FDF5F0")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
               >
                 <div className="flex items-center gap-4">
                   <div

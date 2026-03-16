@@ -41,10 +41,7 @@ export default async function DashboardLayout({
         <nav className="flex-1 px-4 py-6 space-y-1">
           <Link
             href="/dashboard"
-            className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-            style={{ color: "#7A5C58" }}
-            onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+            className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
           >
             <LayoutDashboard className="h-5 w-5 mr-3" />
             <span className="font-medium">Dashboard</span>
@@ -55,20 +52,14 @@ export default async function DashboardLayout({
             <>
               <Link
                 href="/dashboard/hospitals"
-                className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-                style={{ color: "#7A5C58" }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+                className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
               >
                 <Building2 className="h-5 w-5 mr-3" />
                 <span className="font-medium">Clinics</span>
               </Link>
               <Link
                 href="/dashboard/payments"
-                className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-                style={{ color: "#7A5C58" }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+                className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
               >
                 <DollarSign className="h-5 w-5 mr-3" />
                 <span className="font-medium">Payments</span>
@@ -80,10 +71,7 @@ export default async function DashboardLayout({
           {userRole === "HOSPITAL_ADMIN" && (
             <Link
               href="/dashboard/doctors"
-              className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-              style={{ color: "#7A5C58" }}
-              onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-              onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+              className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
             >
               <Stethoscope className="h-5 w-5 mr-3" />
               <span className="font-medium">Care Providers</span>
@@ -94,10 +82,7 @@ export default async function DashboardLayout({
           {(userRole === "DOCTOR" || userRole === "HOSPITAL_ADMIN") && (
             <Link
               href="/dashboard/patients"
-              className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-              style={{ color: "#7A5C58" }}
-              onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-              onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+              className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
             >
               <Users className="h-5 w-5 mr-3" />
               <span className="font-medium">Patients</span>
@@ -109,10 +94,7 @@ export default async function DashboardLayout({
             <>
               <Link
                 href="/dashboard/files"
-                className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-                style={{ color: "#7A5C58" }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+                className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
               >
                 <FileText className="h-5 w-5 mr-3" />
                 <span className="font-medium">Health Records</span>
@@ -120,10 +102,7 @@ export default async function DashboardLayout({
 
               <Link
                 href="/dashboard/chat"
-                className="group flex items-center px-3 py-2.5 rounded-lg transition-all"
-                style={{ color: "#7A5C58" }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+                className="nav-link group flex items-center px-3 py-2.5 rounded-lg"
               >
                 <MessageSquare className="h-5 w-5 mr-3" />
                 <span className="font-medium">AI Health Chat</span>
@@ -170,10 +149,7 @@ export default async function DashboardLayout({
           >
             <button
               type="submit"
-              className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium rounded-lg transition-all"
-              style={{ color: "#7A5C58" }}
-              onMouseEnter={e => { e.currentTarget.style.backgroundColor="#F5E4DC"; e.currentTarget.style.color="#6B2737"; }}
-              onMouseLeave={e => { e.currentTarget.style.backgroundColor="transparent"; e.currentTarget.style.color="#7A5C58"; }}
+              className="nav-link w-full flex items-center justify-center px-3 py-2 text-sm font-medium rounded-lg"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sign Out
