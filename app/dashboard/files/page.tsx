@@ -27,10 +27,10 @@ export default async function FilesPage() {
     <div>
       <div className="mb-8 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-gray-900">
             Files
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-gray-600 mt-2">
             Manage uploaded patient files
           </p>
         </div>
@@ -42,10 +42,10 @@ export default async function FilesPage() {
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         {files.length === 0 ? (
           <div className="p-12 text-center">
-            <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg
                 className="w-8 h-8 text-gray-400"
                 fill="none"
@@ -60,10 +60,10 @@ export default async function FilesPage() {
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
               No files uploaded yet
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-gray-600 mb-6">
               Upload your first patient file to get started
             </p>
             <Link
@@ -74,16 +74,16 @@ export default async function FilesPage() {
             </Link>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200 dark:divide-gray-700">
+          <div className="divide-y divide-gray-200">
             {files.map((file) => (
               <div
                 key={file.id}
-                className="p-6 hover:bg-gray-50 dark:hover:bg-gray-750"
+                className="p-6 hover:bg-gray-50:bg-gray-750"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                         <svg
                           className="w-6 h-6 text-blue-600"
                           fill="none"
@@ -99,10 +99,10 @@ export default async function FilesPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">
+                        <h3 className="font-medium text-gray-900">
                           {file.fileName}
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-gray-600">
                           Patient: {file.Patient.name} •{" "}
                           {(file.fileSize / 1024).toFixed(2)} KB •{" "}
                           {new Date(file.createdAt).toLocaleDateString()}
@@ -114,17 +114,17 @@ export default async function FilesPage() {
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         file.status === "ANALYZED"
-                          ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                          ? "bg-green-100 text-green-800"
                           : file.status === "PROCESSING"
-                          ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                          : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-gray-100 text-gray-800"
                       }`}
                     >
                       {file.status}
                     </span>
                     <Link
                       href={`/dashboard/files/${file.id}`}
-                      className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium text-sm"
+                      className="text-blue-600 hover:text-blue-700:text-blue-300 font-medium text-sm"
                     >
                       Details & Reports
                     </Link>
@@ -132,7 +132,7 @@ export default async function FilesPage() {
                       href={file.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 font-medium text-sm"
+                      className="text-gray-600 hover:text-gray-700:text-gray-300 font-medium text-sm"
                     >
                       Download
                     </a>

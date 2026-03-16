@@ -38,14 +38,14 @@ export default function CSVViewer({ fileId, fileName, metadata }: CSVViewerProps
   const summary = records.length > 0 ? calculateSummary(records) : null;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       {/* Header */}
       <div className="mb-6">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
           {fileName}
         </h3>
         {metadata && (
-          <div className="text-sm text-gray-600 dark:text-gray-400">
+          <div className="text-sm text-gray-600">
             <p>Rows: {metadata.rowCount || 0}</p>
             <p>Columns: {metadata.columnCount || 0}</p>
             {metadata.dateRange && (
@@ -56,13 +56,13 @@ export default function CSVViewer({ fileId, fileName, metadata }: CSVViewerProps
       </div>
 
       {/* View Toggle */}
-      <div className="flex space-x-2 mb-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex space-x-2 mb-6 border-b border-gray-200">
         <button
           onClick={() => setView('summary')}
           className={`px-4 py-2 font-medium ${
             view === 'summary'
               ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              : 'text-gray-600 hover:text-gray-900:text-white'
           }`}
         >
           Summary
@@ -75,7 +75,7 @@ export default function CSVViewer({ fileId, fileName, metadata }: CSVViewerProps
           className={`px-4 py-2 font-medium ${
             view === 'table'
               ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              : 'text-gray-600 hover:text-gray-900:text-white'
           }`}
         >
           Table View
@@ -88,7 +88,7 @@ export default function CSVViewer({ fileId, fileName, metadata }: CSVViewerProps
           className={`px-4 py-2 font-medium ${
             view === 'charts'
               ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              : 'text-gray-600 hover:text-gray-900:text-white'
           }`}
         >
           Charts
@@ -99,13 +99,13 @@ export default function CSVViewer({ fileId, fileName, metadata }: CSVViewerProps
       {loading && (
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">Loading data...</p>
+          <p className="mt-2 text-gray-600">Loading data...</p>
         </div>
       )}
 
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-          <p className="text-red-800 dark:text-red-200">{error}</p>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-red-800">{error}</p>
         </div>
       )}
 
@@ -181,26 +181,26 @@ function MetricCard({ title, value, unit, status, range }: {
   range: string;
 }) {
   const statusColors = {
-    good: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800',
-    warning: 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800',
-    danger: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800',
-    normal: 'bg-gray-50 dark:bg-gray-900/20 border-gray-200 dark:border-gray-700',
+    good: 'bg-green-50 border-green-200',
+    warning: 'bg-yellow-50 border-yellow-200',
+    danger: 'bg-red-50 border-red-200',
+    normal: 'bg-gray-50 border-gray-200',
   };
 
   const textColors = {
-    good: 'text-green-800 dark:text-green-200',
-    warning: 'text-yellow-800 dark:text-yellow-200',
-    danger: 'text-red-800 dark:text-red-200',
-    normal: 'text-gray-800 dark:text-gray-200',
+    good: 'text-green-800',
+    warning: 'text-yellow-800',
+    danger: 'text-red-800',
+    normal: 'text-gray-800',
   };
 
   return (
     <div className={`border rounded-lg p-4 ${statusColors[status]}`}>
-      <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{title}</p>
+      <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
       <p className={`text-2xl font-bold ${textColors[status]}`}>
         {value} <span className="text-sm font-normal">{unit}</span>
       </p>
-      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{range}</p>
+      <p className="text-xs text-gray-500 mt-1">{range}</p>
     </div>
   );
 }
@@ -208,28 +208,28 @@ function MetricCard({ title, value, unit, status, range }: {
 function TableView({ records }: { records: MedicalRecord[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead className="bg-gray-50 dark:bg-gray-900">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Date</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">HbA1c</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Glucose</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">BP</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Weight</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">BMI</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">HbA1c</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Glucose</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">BP</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weight</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">BMI</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+        <tbody className="divide-y divide-gray-200">
           {records.map((record, idx) => (
-            <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{record.visitDate}</td>
-              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{record.labResults.hba1c}%</td>
-              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{record.labResults.fastingBloodGlucose} mg/dL</td>
-              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+            <tr key={idx} className="hover:bg-gray-50:bg-gray-800">
+              <td className="px-4 py-3 text-sm text-gray-900">{record.visitDate}</td>
+              <td className="px-4 py-3 text-sm text-gray-900">{record.labResults.hba1c}%</td>
+              <td className="px-4 py-3 text-sm text-gray-900">{record.labResults.fastingBloodGlucose} mg/dL</td>
+              <td className="px-4 py-3 text-sm text-gray-900">
                 {record.vitals.bloodPressureSystolic}/{record.vitals.bloodPressureDiastolic}
               </td>
-              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{record.vitals.weight} kg</td>
-              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{record.vitals.bmi}</td>
+              <td className="px-4 py-3 text-sm text-gray-900">{record.vitals.weight} kg</td>
+              <td className="px-4 py-3 text-sm text-gray-900">{record.vitals.bmi}</td>
             </tr>
           ))}
         </tbody>
@@ -245,12 +245,12 @@ function ChartsView({ records }: { records: MedicalRecord[] }) {
   return (
     <div className="space-y-6">
       <div>
-        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">HbA1c Trend</h4>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <h4 className="text-lg font-semibold text-gray-900 mb-4">HbA1c Trend</h4>
+        <p className="text-sm text-gray-600">
           Shows progression over {records.length} visits
         </p>
-        <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+          <p className="text-sm text-gray-600">
             Chart visualization would appear here (integrate Chart.js or similar)
           </p>
           <p className="text-xs text-gray-500 mt-2">

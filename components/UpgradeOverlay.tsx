@@ -42,11 +42,18 @@ export default function UpgradeOverlay({
         throw new Error(data.error || "Payment initiation failed");
       }
 
-      setCheckoutRequestId(data.checkoutRequestId);
+      // Extract checkoutRequestId from the payment object
+      const requestId = data.payment?.checkoutRequestId;
+      
+      if (!requestId) {
+        throw new Error("No checkout request ID received from payment server");
+      }
+
+      setCheckoutRequestId(requestId);
       setSuccess(true);
 
       // Poll for payment status
-      pollPaymentStatus(data.checkoutRequestId);
+      pollPaymentStatus(requestId);
     } catch (err: any) {
       setError(err.message);
     } finally {

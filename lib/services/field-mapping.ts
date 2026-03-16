@@ -293,6 +293,43 @@ export const FIELD_MAPPINGS: FieldMapping[] = [
     dataType: 'string',
     category: 'demographics',
     description: 'Type of visit'
+  },
+  
+  // Provider Information
+  {
+    standardField: 'provider',
+    alternativeNames: [
+      'provider', 'doctor', 'physician', 'provider_name', 'attending_physician',
+      'Provider', 'doctor_name', 'clinician', 'practitioner', 'attending_doctor'
+    ],
+    dataType: 'string',
+    category: 'demographics',
+    description: 'Healthcare provider name'
+  },
+  
+  // Recommendations
+  {
+    standardField: 'recommendations',
+    alternativeNames: [
+      'recommendations', 'recommendation', 'treatment_plan', 'plan', 'care_plan',
+      'Recommendations', 'treatment_recommendations', 'clinical_recommendations',
+      'follow_up_plan', 'action_plan'
+    ],
+    dataType: 'string',
+    category: 'other',
+    description: 'Clinical recommendations and treatment plan'
+  },
+  
+  // Next Visit
+  {
+    standardField: 'next_visit',
+    alternativeNames: [
+      'next_visit', 'next_appointment', 'follow_up_date', 'next_visit_date',
+      'Next_Visit', 'followup_date', 'return_visit', 'next_appt'
+    ],
+    dataType: 'date',
+    category: 'demographics',
+    description: 'Next scheduled visit date'
   }
 ];
 

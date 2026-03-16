@@ -36,11 +36,11 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/30">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-64 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-r border-gray-200 dark:border-gray-800 z-40">
+      <aside className="fixed left-0 top-0 h-full w-64 bg-white/80 backdrop-blur-md border-r border-gray-200 z-40">
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-800">
+        <div className="h-16 flex items-center px-6 border-b border-gray-200">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75"></div>
             <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg">
@@ -56,7 +56,7 @@ export default async function DashboardLayout({
         <nav className="flex-1 px-4 py-6 space-y-2">
           <Link
             href="/dashboard"
-            className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+            className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
           >
             <LayoutDashboard className="h-5 w-5 mr-3" />
             <span className="font-medium">Dashboard</span>
@@ -67,14 +67,14 @@ export default async function DashboardLayout({
             <>
               <Link
                 href="/dashboard/hospitals"
-                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
               >
                 <Building2 className="h-5 w-5 mr-3" />
                 <span className="font-medium">Hospitals</span>
               </Link>
               <Link
                 href="/dashboard/payments"
-                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
               >
                 <DollarSign className="h-5 w-5 mr-3" />
                 <span className="font-medium">Payments</span>
@@ -86,7 +86,7 @@ export default async function DashboardLayout({
           {userRole === "HOSPITAL_ADMIN" && (
             <Link
               href="/dashboard/doctors"
-              className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+              className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
             >
               <Users className="h-5 w-5 mr-3" />
               <span className="font-medium">Doctors</span>
@@ -97,7 +97,7 @@ export default async function DashboardLayout({
           {(userRole === "DOCTOR" || userRole === "HOSPITAL_ADMIN") && (
             <Link
               href="/dashboard/patients"
-              className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+              className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
             >
               <Users className="h-5 w-5 mr-3" />
               <span className="font-medium">Patients</span>
@@ -109,7 +109,7 @@ export default async function DashboardLayout({
             <>
               <Link
                 href="/dashboard/files"
-                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
               >
                 <FileText className="h-5 w-5 mr-3" />
                 <span className="font-medium">Files</span>
@@ -117,7 +117,7 @@ export default async function DashboardLayout({
               
               <Link
                 href="/dashboard/chat"
-                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                className="group flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50:bg-blue-950/50 hover:text-blue-600:text-blue-400 transition-all"
               >
                 <MessageSquare className="h-5 w-5 mr-3" />
                 <span className="font-medium">AI Assistant</span>
@@ -127,7 +127,7 @@ export default async function DashboardLayout({
         </nav>
 
         {/* User Section */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white/50 backdrop-blur-sm">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
@@ -136,10 +136,10 @@ export default async function DashboardLayout({
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                <p className="text-sm font-medium text-gray-900 truncate">
                   {session?.user?.name}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                <p className="text-xs text-gray-500 truncate">
                   {session?.user?.email}
                 </p>
               </div>
@@ -154,7 +154,7 @@ export default async function DashboardLayout({
           >
             <button
               type="submit"
-              className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg transition-all"
+              className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-red-600:text-red-400 hover:bg-red-50:bg-red-950/50 rounded-lg transition-all"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sign Out
@@ -166,10 +166,10 @@ export default async function DashboardLayout({
       {/* Main Content */}
       <div className="ml-64">
         {/* Top Header */}
-        <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <header className="sticky top-0 z-30 h-16 bg-white/80 backdrop-blur-md border-b border-gray-200">
           <div className="h-full px-8 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                 Medical Intelligence Platform
               </h1>
             </div>
@@ -177,8 +177,8 @@ export default async function DashboardLayout({
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-25"></div>
-                <div className="relative bg-white dark:bg-slate-800 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700">
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <div className="relative bg-white px-4 py-2 rounded-lg border border-gray-200">
+                  <p className="text-sm font-medium text-gray-700">
                     AI Powered 🚀
                   </p>
                 </div>

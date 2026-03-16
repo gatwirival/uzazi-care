@@ -366,20 +366,20 @@ export default function ChatPage() {
       )}
 
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               AI Doctor Assistant
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-gray-600 mt-2">
               Chat with specialized medical AI agents for diagnosis and treatment guidance
             </p>
           </div>
           {messages.length > 0 && (
             <button
               onClick={handleClearChat}
-              className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              className="px-4 py-2 text-sm text-red-600 hover:bg-red-50:bg-red-900/20 rounded-lg transition-colors"
             >
               Clear Chat
             </button>
@@ -389,13 +389,13 @@ export default function ChatPage() {
         {/* Agent Selection */}
         <div className="grid md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Select Doctor Agent
             </label>
             <select
               value={selectedAgent}
               onChange={(e) => setSelectedAgent(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
               disabled={isLoading}
             >
               {agents.map((agent) => (
@@ -405,14 +405,14 @@ export default function ChatPage() {
               ))}
             </select>
             {selectedAgentData && (
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+              <p className="text-sm text-gray-600 mt-2">
                 {selectedAgentData.description}
               </p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Patient Context (Optional)
             </label>
             <select
@@ -421,7 +421,7 @@ export default function ChatPage() {
                 setSelectedPatient(e.target.value);
                 setIncludePatientContext(!!e.target.value);
               }}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
               disabled={isLoading}
             >
               <option value="">No patient selected</option>
@@ -431,7 +431,7 @@ export default function ChatPage() {
                 </option>
               ))}
             </select>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Include patient data in the conversation context
             </p>
           </div>
@@ -440,14 +440,14 @@ export default function ChatPage() {
         {/* Agent Capabilities */}
         {selectedAgentData && (
           <div className="mt-4">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <p className="text-sm font-medium text-gray-700 mb-2">
               Capabilities:
             </p>
             <div className="flex flex-wrap gap-2">
               {selectedAgentData.capabilities.map((capability, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs rounded-full"
+                  className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
                 >
                   {capability}
                 </span>
@@ -458,17 +458,17 @@ export default function ChatPage() {
       </div>
 
       {/* Chat Messages */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col min-h-[600px]">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col min-h-[600px]">
         <div className="p-6 space-y-4">
           {messages.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">
                 {selectedAgentData?.icon || "👨‍⚕️"}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 Start a conversation
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+              <p className="text-gray-600 max-w-md mx-auto">
                 Ask questions about diagnosis, treatment, or general medical advice.
                 Your conversation is private and secure.
               </p>
@@ -479,7 +479,7 @@ export default function ChatPage() {
                       "What are the early warning signs of diabetes?"
                     )
                   }
-                  className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50:bg-gray-700 transition-colors text-sm text-gray-700"
                 >
                   💡 What are the early warning signs of diabetes?
                 </button>
@@ -489,7 +489,7 @@ export default function ChatPage() {
                       "How should I interpret HbA1c levels?"
                     )
                   }
-                  className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50:bg-gray-700 transition-colors text-sm text-gray-700"
                 >
                   📊 How should I interpret HbA1c levels?
                 </button>
@@ -499,7 +499,7 @@ export default function ChatPage() {
                       "What lifestyle changes help manage diabetes?"
                     )
                   }
-                  className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50:bg-gray-700 transition-colors text-sm text-gray-700"
                 >
                   🏃 What lifestyle changes help manage diabetes?
                 </button>
@@ -509,7 +509,7 @@ export default function ChatPage() {
                       "When should insulin therapy be considered?"
                     )
                   }
-                  className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50:bg-gray-700 transition-colors text-sm text-gray-700"
                 >
                   💉 When should insulin therapy be considered?
                 </button>
@@ -531,13 +531,13 @@ export default function ChatPage() {
                   {message.role === "system" ? (
                     // System message (agent switches, etc.)
                     <div className="max-w-3xl w-full">
-                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                        <div className="prose prose-sm max-w-none dark:prose-invert">
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                        <div className="prose prose-sm max-w-none">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {message.content}
                           </ReactMarkdown>
                         </div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                        <div className="text-xs text-gray-500 mt-2">
                           {message.timestamp.toLocaleTimeString()}
                         </div>
                       </div>
@@ -548,7 +548,7 @@ export default function ChatPage() {
                       className={`max-w-3xl rounded-lg p-4 ${
                         message.role === "user"
                           ? "bg-blue-600 text-white"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                          : "bg-gray-100 text-gray-900"
                       }`}
                     >
                       <div className="flex items-start space-x-3">
@@ -563,7 +563,7 @@ export default function ChatPage() {
                               ? "You"
                               : selectedAgentData?.name || "AI Doctor"}
                           </div>
-                          <div className="prose prose-sm max-w-none dark:prose-invert">
+                          <div className="prose prose-sm max-w-none">
                             {message.content ? (
                               <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
@@ -575,9 +575,9 @@ export default function ChatPage() {
                                   li: ({ node, ...props }) => <li className="mb-1" {...props} />,
                                   code: ({ node, inline, ...props }: any) =>
                                     inline ? (
-                                      <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
+                                      <code className="bg-gray-100 px-1 py-0.5 rounded text-sm" {...props} />
                                     ) : (
-                                      <code className="block bg-gray-100 dark:bg-gray-800 p-2 rounded my-2 overflow-x-auto" {...props} />
+                                      <code className="block bg-gray-100 p-2 rounded my-2 overflow-x-auto" {...props} />
                                     ),
                                   strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
                                   em: ({ node, ...props }) => <em className="italic" {...props} />,
@@ -605,28 +605,28 @@ export default function ChatPage() {
 
         {/* Error Display */}
         {error && (
-          <div className="px-6 py-3 bg-red-50 dark:bg-red-900/20 border-t border-red-200 dark:border-red-800">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          <div className="px-6 py-3 bg-red-50 border-t border-red-200">
+            <p className="text-sm text-red-600">{error}</p>
           </div>
         )}
 
         {/* Input Form */}
-        <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200 dark:border-gray-700">
+        <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200">
           {/* File Upload Area */}
           {uploadedFiles.length > 0 && (
             <div className="mb-3 flex flex-wrap gap-2">
               {uploadedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-2 rounded-lg text-sm"
+                  className="flex items-center space-x-2 bg-blue-50 px-3 py-2 rounded-lg text-sm"
                 >
-                  <span className="text-blue-700 dark:text-blue-300">
+                  <span className="text-blue-700">
                     📎 {file.name} ({(file.size / 1024).toFixed(1)}KB)
                   </span>
                   <button
                     type="button"
                     onClick={() => handleRemoveFile(index)}
-                    className="text-red-600 hover:text-red-800 dark:text-red-400"
+                    className="text-red-600 hover:text-red-800"
                   >
                     ✕
                   </button>
@@ -649,7 +649,7 @@ export default function ChatPage() {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isLoading}
-              className="px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+              className="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200:bg-gray-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               title="Upload medical records (CSV, images, PDF)"
             >
               📎
@@ -660,7 +660,7 @@ export default function ChatPage() {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Ask a medical question or upload files..."
-              className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               disabled={isLoading}
             />
             <button
@@ -697,7 +697,7 @@ export default function ChatPage() {
               )}
             </button>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-xs text-gray-500 mt-2">
             ⚠️ This is AI-assisted guidance. Always consult with a healthcare
             provider for medical decisions. Supported files: CSV, PDF, Images (PNG, JPG), Text
           </p>

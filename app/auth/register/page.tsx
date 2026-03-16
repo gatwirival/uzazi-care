@@ -54,7 +54,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 flex">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
       {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:flex-1 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600"></div>
@@ -135,23 +135,23 @@ export default function RegisterPage() {
 
           <div className="text-center mb-8">
             <h2 className="text-4xl font-bold mb-3">
-              <span className="bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                 Register Your Hospital
               </span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
+            <p className="text-gray-600 text-lg">
               Start your 30-day free trial today
             </p>
           </div>
 
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 rounded-2xl blur"></div>
-            <div className="relative bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 shadow-xl">
+            <div className="relative bg-white rounded-2xl border border-gray-200 p-8 shadow-xl">
               <form onSubmit={handleSubmit} className="space-y-5">
                 {error && (
                   <div className="relative">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-red-500 rounded-lg blur opacity-20"></div>
-                    <div className="relative bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
+                    <div className="relative bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
                       {error}
                     </div>
                   </div>
@@ -160,7 +160,7 @@ export default function RegisterPage() {
                 <div>
                   <label
                     htmlFor="hospitalName"
-                    className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
                   >
                     Hospital Name
                   </label>
@@ -174,7 +174,7 @@ export default function RegisterPage() {
                       value={hospitalName}
                       onChange={(e) => setHospitalName(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white transition-all"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="City General Hospital"
                     />
                   </div>
@@ -183,7 +183,7 @@ export default function RegisterPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
                   >
                     Admin Email Address
                   </label>
@@ -197,11 +197,11 @@ export default function RegisterPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white transition-all"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="admin@hospital.com"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  <p className="mt-1 text-xs text-gray-500">
                     This will be your login email
                   </p>
                 </div>
@@ -209,7 +209,7 @@ export default function RegisterPage() {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
                   >
                     Password
                   </label>
@@ -223,11 +223,11 @@ export default function RegisterPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white transition-all"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="••••••••"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  <p className="mt-1 text-xs text-gray-500">
                     Must be at least 8 characters
                   </p>
                 </div>
@@ -235,7 +235,7 @@ export default function RegisterPage() {
                 <div>
                   <label
                     htmlFor="confirmPassword"
-                    className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
                   >
                     Confirm Password
                   </label>
@@ -249,7 +249,7 @@ export default function RegisterPage() {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white transition-all"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="••••••••"
                     />
                   </div>
@@ -271,10 +271,10 @@ export default function RegisterPage() {
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                    <div className="w-full border-t border-gray-200"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-4 bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400">
+                    <span className="px-4 bg-white text-gray-500">
                       Already have an account?
                     </span>
                   </div>
@@ -283,7 +283,7 @@ export default function RegisterPage() {
                 <div className="mt-6 text-center">
                   <Link
                     href="/auth/login"
-                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700:text-blue-300 font-semibold transition-colors"
                   >
                     Sign in instead
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -293,7 +293,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
+          <div className="mt-8 text-center text-xs text-gray-500">
             By registering, you agree to our Terms of Service and Privacy Policy.<br />
             Your hospital admin account will be created automatically.
           </div>

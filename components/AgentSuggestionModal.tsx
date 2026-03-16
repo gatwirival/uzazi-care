@@ -34,10 +34,10 @@ export default function AgentSuggestionModal({
   const confidencePercentage = Math.round(suggestion.confidence * 100);
   const confidenceColor =
     suggestion.confidence >= 0.7
-      ? "text-green-600 dark:text-green-400"
+      ? "text-green-600"
       : suggestion.confidence >= 0.5
-      ? "text-yellow-600 dark:text-yellow-400"
-      : "text-orange-600 dark:text-orange-400";
+      ? "text-yellow-600"
+      : "text-orange-600";
 
   const handleAccept = () => {
     setIsAccepting(true);
@@ -54,7 +54,7 @@ export default function AgentSuggestionModal({
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-t-2xl text-white">
             <div className="flex items-center justify-between">
@@ -91,13 +91,13 @@ export default function AgentSuggestionModal({
           {/* Content */}
           <div className="p-6 space-y-6">
             {/* Agent Info */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+            <div className="bg-blue-50 rounded-xl p-4">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                  <h3 className="text-xl font-bold text-gray-900">
                     {suggestion.agentName}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600">
                     {suggestion.specialty}
                   </p>
                 </div>
@@ -105,14 +105,14 @@ export default function AgentSuggestionModal({
                   <div className={`text-2xl font-bold ${confidenceColor}`}>
                     {confidencePercentage}%
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-gray-500">
                     Confidence
                   </div>
                 </div>
               </div>
 
               {/* Progress bar */}
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
                   className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
                   style={{ width: `${confidencePercentage}%` }}
@@ -122,10 +122,10 @@ export default function AgentSuggestionModal({
 
             {/* Reasoning */}
             <div>
-              <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <h4 className="text-sm font-semibold text-gray-700 mb-2">
                 📋 Why this specialist?
               </h4>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed">
                 {suggestion.reason}
               </p>
             </div>
@@ -133,14 +133,14 @@ export default function AgentSuggestionModal({
             {/* Detected Symptoms */}
             {suggestion.symptoms.length > 0 && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">
                   🩺 Detected Symptoms
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {suggestion.symptoms.map((symptom, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-xs rounded-full border border-red-200 dark:border-red-800"
+                      className="px-3 py-1 bg-red-50 text-red-700 text-xs rounded-full border border-red-200"
                     >
                       {symptom}
                     </span>
@@ -152,14 +152,14 @@ export default function AgentSuggestionModal({
             {/* Keywords */}
             {suggestion.keywords.length > 0 && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">
                   🔑 Relevant Keywords
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {suggestion.keywords.slice(0, 8).map((keyword, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-xs rounded-full border border-purple-200 dark:border-purple-800"
+                      className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full border border-purple-200"
                     >
                       {keyword}
                     </span>
@@ -171,14 +171,14 @@ export default function AgentSuggestionModal({
             {/* Patient Conditions */}
             {suggestion.patientConditions && suggestion.patientConditions.length > 0 && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">
                   📊 Patient's Existing Conditions
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {suggestion.patientConditions.map((condition, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 text-xs rounded-full border border-amber-200 dark:border-amber-800"
+                      className="px-3 py-1 bg-amber-50 text-amber-700 text-xs rounded-full border border-amber-200"
                     >
                       {condition}
                     </span>
@@ -188,11 +188,11 @@ export default function AgentSuggestionModal({
             )}
 
             {/* Info Notice */}
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
               <div className="flex items-start space-x-3">
-                <div className="text-yellow-600 dark:text-yellow-400 text-xl">ℹ️</div>
+                <div className="text-yellow-600 text-xl">ℹ️</div>
                 <div className="flex-1">
-                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  <p className="text-sm text-yellow-800">
                     <strong>Note:</strong> You can continue with the General Doctor or
                     switch to this specialist. The specialist has in-depth knowledge
                     about this specific condition and can provide more targeted guidance.
@@ -203,11 +203,11 @@ export default function AgentSuggestionModal({
           </div>
 
           {/* Actions */}
-          <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-b-2xl flex space-x-3">
+          <div className="bg-gray-50 p-6 rounded-b-2xl flex space-x-3">
             <button
               onClick={onDecline}
               disabled={isAccepting}
-              className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100:bg-gray-800 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Continue with General Doctor
             </button>

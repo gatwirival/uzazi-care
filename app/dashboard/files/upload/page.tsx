@@ -118,18 +118,18 @@ export default function UploadFilePage() {
           </svg>
           Back to Files
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-3xl font-bold text-gray-900">
           Upload File
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-gray-600 mt-2">
           Upload CSV files or medical documents
         </p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
               {error}
             </div>
           )}
@@ -137,7 +137,7 @@ export default function UploadFilePage() {
           <div>
             <label
               htmlFor="patient"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-gray-700 mb-2"
             >
               Select Patient *
             </label>
@@ -146,7 +146,7 @@ export default function UploadFilePage() {
               value={selectedPatient}
               onChange={(e) => setSelectedPatient(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">Choose a patient...</option>
               {patients.map((patient) => (
@@ -156,7 +156,7 @@ export default function UploadFilePage() {
               ))}
             </select>
             {patients.length === 0 && (
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-sm text-gray-600">
                 No patients found.{" "}
                 <Link
                   href="/dashboard/patients/new"
@@ -169,14 +169,14 @@ export default function UploadFilePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               File *
             </label>
             <div
               className={`border-2 border-dashed rounded-lg p-8 text-center ${
                 dragActive
-                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                  : "border-gray-300 dark:border-gray-600"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
               }`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -194,7 +194,7 @@ export default function UploadFilePage() {
                 htmlFor="file-upload"
                 className="cursor-pointer"
               >
-                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     className="w-8 h-8 text-gray-400"
                     fill="none"
@@ -210,9 +210,9 @@ export default function UploadFilePage() {
                   </svg>
                 </div>
                 {file ? (
-                  <div className="text-gray-900 dark:text-white">
+                  <div className="text-gray-900">
                     <p className="font-medium">{file.name}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600">
                       {(file.size / 1024).toFixed(2)} KB
                     </p>
                     <button
@@ -228,11 +228,11 @@ export default function UploadFilePage() {
                   </div>
                 ) : (
                   <div>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">
+                    <p className="text-gray-600 mb-2">
                       <span className="font-medium text-blue-600">Click to upload</span>{" "}
                       or drag and drop
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                    <p className="text-sm text-gray-500">
                       CSV, Excel, PDF, or images (max 10MB)
                     </p>
                   </div>
@@ -244,7 +244,7 @@ export default function UploadFilePage() {
           <div className="flex justify-end space-x-4">
             <Link
               href="/dashboard/files"
-              className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium transition-colors"
+              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50:bg-gray-700 font-medium transition-colors"
             >
               Cancel
             </Link>

@@ -207,7 +207,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
 
   if (data.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+      <div className="text-center py-12 text-gray-500">
         No data available to display
       </div>
     );
@@ -227,27 +227,27 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
               setFilterText(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
         {/* Items per page */}
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-600 dark:text-gray-400">Show:</label>
+          <label className="text-sm text-gray-600">Show:</label>
           <select
             value={itemsPerPage}
             onChange={(e) => {
               setItemsPerPage(Number(e.target.value));
               setCurrentPage(1);
             }}
-            className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+            className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900"
           >
             <option value={10}>10</option>
             <option value={25}>25</option>
             <option value={50}>50</option>
             <option value={100}>100</option>
           </select>
-          <span className="text-sm text-gray-600 dark:text-gray-400">per page</span>
+          <span className="text-sm text-gray-600">per page</span>
         </div>
       </div>
 
@@ -274,7 +274,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedCategory === id
                   ? `bg-${color}-600 text-white`
-                  : `bg-${color}-100 dark:bg-${color}-900/20 text-${color}-700 dark:text-${color}-400 hover:bg-${color}-200 dark:hover:bg-${color}-900/40`
+                  : `bg-${color}-100${color}-900/20 text-${color}-700${color}-400 hover:bg-${color}-200:bg-${color}-900/40`
               }`}
             >
               {label} ({count})
@@ -284,7 +284,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
       </div>
 
       {/* Stats */}
-      <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+      <div className="flex items-center justify-between text-sm text-gray-600">
         <div>
           Showing {paginatedData.length} of {processedData.length} records
           {filterText && ` (filtered from ${data.length} total)`}
@@ -295,34 +295,34 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded-lg">
+      <div className="overflow-x-auto border border-gray-200 rounded-lg">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300 sticky left-0 bg-gray-50 dark:bg-gray-800 z-10">
+              <th className="px-4 py-3 text-left font-semibold text-gray-700 sticky left-0 bg-gray-50 z-10">
                 #
               </th>
               {columns.map((column) => {
                 const category = getColumnCategory(column);
                 const categoryColors: Record<string, string> = {
-                  visit: 'text-blue-700 dark:text-blue-400',
-                  vitals: 'text-green-700 dark:text-green-400',
-                  labs: 'text-purple-700 dark:text-purple-400',
-                  medications: 'text-orange-700 dark:text-orange-400',
-                  clinical: 'text-red-700 dark:text-red-400',
-                  other: 'text-gray-700 dark:text-gray-400'
+                  visit: 'text-blue-700',
+                  vitals: 'text-green-700',
+                  labs: 'text-purple-700',
+                  medications: 'text-orange-700',
+                  clinical: 'text-red-700',
+                  other: 'text-gray-700'
                 };
                 
                 return (
                   <th
                     key={column}
-                    className={`px-4 py-3 text-left font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 ${categoryColors[category]}`}
+                    className={`px-4 py-3 text-left font-semibold cursor-pointer hover:bg-gray-100:bg-gray-700 ${categoryColors[category]}`}
                     onClick={() => handleSort(column)}
                   >
                     <div className="flex items-center gap-2">
                       <span>{getColumnDisplay(column)}</span>
                       {sortColumn === column && (
-                        <span className="text-blue-600 dark:text-blue-400">
+                        <span className="text-blue-600">
                           {sortDirection === 'asc' ? '↑' : '↓'}
                         </span>
                       )}
@@ -332,13 +332,13 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="divide-y divide-gray-200">
             {paginatedData.map((record, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                className="hover:bg-gray-50:bg-gray-800/50 transition-colors"
               >
-                <td className="px-4 py-3 font-medium text-gray-900 dark:text-white sticky left-0 bg-white dark:bg-gray-900">
+                <td className="px-4 py-3 font-medium text-gray-900 sticky left-0 bg-white">
                   {(currentPage - 1) * itemsPerPage + idx + 1}
                 </td>
                 {columns.map((column) => {
@@ -352,7 +352,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
                   return (
                     <td
                       key={column}
-                      className="px-4 py-3 text-gray-700 dark:text-gray-300 max-w-xs truncate"
+                      className="px-4 py-3 text-gray-700 max-w-xs truncate"
                       title={displayValue}
                     >
                       {displayValue}
@@ -371,7 +371,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
           <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50:bg-gray-700 transition-colors"
           >
             Previous
           </button>
@@ -396,7 +396,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
                   className={`px-4 py-2 rounded-lg transition-colors ${
                     currentPage === pageNum
                       ? 'bg-blue-600 text-white'
-                      : 'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      : 'bg-white border border-gray-300 hover:bg-gray-50:bg-gray-700'
                   }`}
                 >
                   {pageNum}
@@ -408,7 +408,7 @@ export default function CSVTableView({ data, fileName, fieldMappings }: CSVTable
           <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50:bg-gray-700 transition-colors"
           >
             Next
           </button>

@@ -15,7 +15,10 @@ export interface STKPushResponse {
   msg: string;
   status: boolean;
   requestId?: string;
+  checkoutRequestId?: string;
   merchantRequestId?: string;
+  responseCode?: string;
+  customerMessage?: string;
   error?: any;
 }
 
@@ -55,12 +58,9 @@ export async function initiateSTKPush(
       formattedPhone = '254' + phoneNumber;
     }
 
-    // Get the callback URL (use environment variable or construct from request)
-    const callbackUrl = process.env.NEXT_PUBLIC_APP_URL 
-      ? `${process.env.NEXT_PUBLIC_APP_URL}/api/payments/callback`
-      : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/payments/callback`
-      : 'http://localhost:3000/api/payments/callback';
+    // Use the Daraja server's callback endpoint
+    // The Daraja server at https://daraja-node.vercel.app will handle the M-Pesa callback
+    const callbackUrl = 'https://daraja-node.vercel.app/api/callback';
 
     console.log('Initiating STK Push:', {
       phoneNumber: formattedPhone,
@@ -94,8 +94,11 @@ export async function initiateSTKPush(
     return {
       msg: data.msg,
       status: data.status,
-      requestId: data.requestId,
-      merchantRequestId: data.merchantRequestId
+      requestId: data.checkoutRequestId, // Match the actual field name from daraja-node
+      merchantRequestId: data.merchantRequestId,
+      checkoutRequestId: data.checkoutRequestId, // Add this for convenience
+      responseCode: data.responseCode,
+      customerMessage: data.customerMessage
     };
   } catch (error) {
     console.error('STK Push Error:', error);

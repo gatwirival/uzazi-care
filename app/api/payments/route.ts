@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
         amount: paymentAmount,
         phoneNumber: paymentPhone,
         merchantRequestId: stkResponse.merchantRequestId,
-        checkoutRequestId: stkResponse.requestId || '',
+        checkoutRequestId: stkResponse.checkoutRequestId || stkResponse.requestId || '',
         status: 'PENDING',
         metadata: {
           initiatedBy: session.user.id,
@@ -166,7 +166,8 @@ export async function POST(request: NextRequest) {
         id: payment.id,
         amount: payment.amount,
         status: payment.status,
-        checkoutRequestId: payment.checkoutRequestId
+        checkoutRequestId: payment.checkoutRequestId,
+        merchantRequestId: payment.merchantRequestId
       }
     });
   } catch (error) {
