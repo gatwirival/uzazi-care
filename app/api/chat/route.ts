@@ -3,8 +3,9 @@ import { auth } from '@/lib/auth';
 import { streamChatCompletion, ChatMessage } from '@/lib/ai/deepseek';
 import { getAgent, formatPatientContextForAgent, AgentType } from '@/lib/ai/agents';
 import { prisma } from '@/lib/db';
+import { suggestAgent, getAgentKnowledge } from '@/lib/services/agent-routing';
 
-export const runtime = 'edge';
+// Note: Using Node runtime (not edge) because we need Prisma database access
 
 /**
  * POST /api/chat - Stream chat responses from AI doctor agents
@@ -39,10 +40,28 @@ export async function POST(request: NextRequest) {
     // Get the selected agent
     const agent = getAgent(agentId as AgentType);
 
+    // Analyze first message for agent suggestion (if using general-doctor)
+    let agentSuggestion = null;
+    if (agentId === 'general-doctor' && messages.length > 0) {
+      const userMessage = messages[messages.length - 1];
+      if (userMessage.role === 'user') {
+        agentSuggestion = await suggestAgent(userMessage.content, patientId);
+      }
+    }
+
     // Build the messages array with system prompt
     const chatMessages: ChatMessage[] = [
       { role: 'system', content: agent.systemPrompt },
     ];
+
+    // Add doctor's fine-tuned knowledge for this agent
+    const customKnowledge = await getAgentKnowledge(session.user.id, agentId);
+    if (customKnowledge.length > 0) {
+      chatMessages.push({
+        role: 'system',
+        content: `DOCTOR'S CUSTOM KNOWLEDGE BASE:\n\n${customKnowledge.join('\n\n---\n\n')}\n\nUse this knowledge to provide more personalized and specialized care.`,
+      });
+    }
 
     // If patient context is requested and patientId is provided, fetch patient data
     if (includePatientContext && patientId) {
@@ -53,8 +72,8 @@ export async function POST(request: NextRequest) {
             doctorId: session.user.id,
           },
           include: {
-            files: {
-              orderBy: { uploadDate: 'desc' },
+            File: {
+              orderBy: { createdAt: 'desc' },
               take: 1, // Get most recent file for lab results
             },
           },
@@ -69,7 +88,7 @@ export async function POST(request: NextRequest) {
           }
 
           // Extract lab results from most recent file metadata if available
-          const latestFile = patient.files[0];
+          const latestFile = patient.File[0];
           let labResults: any = null;
           let vitals: any = null;
 
@@ -163,8 +182,23 @@ export async function POST(request: NextRequest) {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
+    // Send agent suggestion first if available
+    let agentSuggestionSent = false;
+
     const transformStream = new TransformStream({
       async transform(chunk, controller) {
+        // Send agent suggestion before first content chunk
+        if (!agentSuggestionSent && agentSuggestion) {
+          const suggestionData = {
+            type: 'agent_suggestion',
+            suggestion: agentSuggestion,
+          };
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify(suggestionData)}\n\n`)
+          );
+          agentSuggestionSent = true;
+        }
+
         const text = decoder.decode(chunk);
         const lines = text.split('\n');
 

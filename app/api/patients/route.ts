@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: 'desc' },
       include: {
         _count: {
-          select: { files: true, inferences: true },
+          select: { File: true, MedicalRecord: true },
         },
       },
     });

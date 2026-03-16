@@ -12,9 +12,9 @@ export default async function FilesPage() {
 
   const files = await prisma.file.findMany({
     where: { doctorId: session.user.id },
-    orderBy: { uploadDate: "desc" },
+    orderBy: { createdAt: "desc" },
     include: {
-      patient: {
+      Patient: {
         select: {
           id: true,
           name: true,
@@ -103,9 +103,9 @@ export default async function FilesPage() {
                           {file.fileName}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          Patient: {file.patient.name} •{" "}
+                          Patient: {file.Patient.name} •{" "}
                           {(file.fileSize / 1024).toFixed(2)} KB •{" "}
-                          {new Date(file.uploadDate).toLocaleDateString()}
+                          {new Date(file.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
@@ -122,13 +122,19 @@ export default async function FilesPage() {
                     >
                       {file.status}
                     </span>
+                    <Link
+                      href={`/dashboard/files/${file.id}`}
+                      className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium text-sm"
+                    >
+                      Details & Reports
+                    </Link>
                     <a
-                      href={file.filePath}
+                      href={file.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                      className="text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 font-medium text-sm"
                     >
-                      View
+                      Download
                     </a>
                   </div>
                 </div>

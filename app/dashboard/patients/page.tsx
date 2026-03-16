@@ -16,7 +16,7 @@ export default async function PatientsPage() {
     orderBy: { createdAt: "desc" },
     include: {
       _count: {
-        select: { files: true, inferences: true },
+        select: { File: true, MedicalRecord: true },
       },
     },
   });
@@ -111,10 +111,10 @@ export default async function PatientsPage() {
                       {patient.gender || "N/A"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                      {patient._count.files}
+                      {patient._count.File}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                      {patient._count.inferences}
+                      {patient._count.MedicalRecord}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                       {new Date(patient.createdAt).toLocaleDateString()}

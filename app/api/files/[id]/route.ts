@@ -23,8 +23,8 @@ export async function GET(
         doctorId,
       },
       include: {
-        patient: true,
-        inferences: {
+        Patient: true,
+        Inference: {
           orderBy: { createdAt: 'desc' },
         },
       },

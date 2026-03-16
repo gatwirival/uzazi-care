@@ -2,12 +2,27 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import AgentSuggestionModal from "@/components/AgentSuggestionModal";
 
 interface Message {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
   timestamp: Date;
+}
+
+interface AgentSuggestion {
+  agentId: string;
+  agentName: string;
+  specialty: string;
+  confidence: number;
+  reason: string;
+  keywords: string[];
+  symptoms: string[];
+  patientConditions?: string[];
+  icon: string;
 }
 
 interface Agent {
@@ -28,7 +43,7 @@ export default function ChatPage() {
   const router = useRouter();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [selectedAgent, setSelectedAgent] = useState<string>("diabetic-doctor");
+  const [selectedAgent, setSelectedAgent] = useState<string>("general-doctor");
   const [selectedPatient, setSelectedPatient] = useState<string>("");
   const [includePatientContext, setIncludePatientContext] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -36,6 +51,9 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [agentSuggestion, setAgentSuggestion] = useState<AgentSuggestion | null>(null);
+  const [showSuggestionModal, setShowSuggestionModal] = useState(false);
+  const [pendingUserMessage, setPendingUserMessage] = useState<Message | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -89,8 +107,48 @@ export default function ChatPage() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const currentInput = inputMessage.trim();
     setInputMessage("");
     setError("");
+
+    // If using general-doctor, check for agent suggestions first
+    if (selectedAgent === "general-doctor" && currentInput && selectedPatient) {
+      setIsLoading(true);
+      try {
+        // Request agent suggestion from API
+        const suggestionResponse = await fetch("/api/chat/suggest-agent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: currentInput,
+            patientId: selectedPatient,
+          }),
+        });
+
+        if (suggestionResponse.ok) {
+          const { suggestion } = await suggestionResponse.json();
+          
+          if (suggestion && suggestion.agentId !== "general-doctor") {
+            // Show suggestion modal and pause sending
+            setAgentSuggestion(suggestion);
+            setShowSuggestionModal(true);
+            setPendingUserMessage(userMessage);
+            setIsLoading(false);
+            return; // Wait for user to accept/decline
+          }
+        }
+      } catch (err) {
+        console.error("Failed to get agent suggestion:", err);
+        // Continue with general doctor if suggestion fails
+      }
+      setIsLoading(false);
+    }
+
+    // Proceed with sending message
+    await sendMessageToAgent(userMessage);
+  };
+
+  const sendMessageToAgent = async (userMessage: Message) => {
     setIsLoading(true);
 
     // Create abort controller for this request
@@ -238,6 +296,44 @@ export default function ChatPage() {
     }
   };
 
+  const handleAcceptSuggestion = async () => {
+    if (!agentSuggestion) return;
+
+    // Switch to suggested agent
+    setSelectedAgent(agentSuggestion.agentId);
+    setShowSuggestionModal(false);
+
+    // Add system message about the switch
+    const systemMessage: Message = {
+      id: Date.now().toString(),
+      role: "system",
+      content: `🔄 **Agent Switch**: You are now connected to **${agentSuggestion.agentName}** (${agentSuggestion.specialty}). This specialist can provide more targeted guidance for your case.`,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, systemMessage]);
+
+    // Send the pending message to the new agent
+    if (pendingUserMessage) {
+      await sendMessageToAgent(pendingUserMessage);
+      setPendingUserMessage(null);
+    }
+
+    setAgentSuggestion(null);
+  };
+
+  const handleDeclineSuggestion = async () => {
+    setShowSuggestionModal(false);
+
+    // Send the pending message with general doctor
+    if (pendingUserMessage) {
+      await sendMessageToAgent(pendingUserMessage);
+      setPendingUserMessage(null);
+    }
+
+    setAgentSuggestion(null);
+  };
+
   const handleClearChat = () => {
     setMessages([]);
     setError("");
@@ -259,6 +355,16 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col pb-8">
+      {/* Agent Suggestion Modal */}
+      {agentSuggestion && (
+        <AgentSuggestionModal
+          suggestion={agentSuggestion}
+          onAccept={handleAcceptSuggestion}
+          onDecline={handleDeclineSuggestion}
+          isOpen={showSuggestionModal}
+        />
+      )}
+
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
@@ -415,39 +521,81 @@ export default function ChatPage() {
                 <div
                   key={message.id}
                   className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
+                    message.role === "user"
+                      ? "justify-end"
+                      : message.role === "system"
+                      ? "justify-center"
+                      : "justify-start"
                   }`}
                 >
-                  <div
-                    className={`max-w-3xl rounded-lg p-4 ${
-                      message.role === "user"
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                    }`}
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className="text-2xl flex-shrink-0">
-                        {message.role === "user"
-                          ? "👤"
-                          : selectedAgentData?.icon || "👨‍⚕️"}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-semibold mb-1">
-                          {message.role === "user"
-                            ? "You"
-                            : selectedAgentData?.name || "AI Doctor"}
+                  {message.role === "system" ? (
+                    // System message (agent switches, etc.)
+                    <div className="max-w-3xl w-full">
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                        <div className="prose prose-sm max-w-none dark:prose-invert">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {message.content}
+                          </ReactMarkdown>
                         </div>
-                        <div className="prose prose-sm max-w-none dark:prose-invert whitespace-pre-wrap">
-                          {message.content || (
-                            <span className="animate-pulse">Thinking...</span>
-                          )}
-                        </div>
-                        <div className="text-xs opacity-70 mt-2">
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                           {message.timestamp.toLocaleTimeString()}
                         </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    // User or assistant message
+                    <div
+                      className={`max-w-3xl rounded-lg p-4 ${
+                        message.role === "user"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                      }`}
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div className="text-2xl flex-shrink-0">
+                          {message.role === "user"
+                            ? "👤"
+                            : selectedAgentData?.icon || "👨‍⚕️"}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold mb-1">
+                            {message.role === "user"
+                              ? "You"
+                              : selectedAgentData?.name || "AI Doctor"}
+                          </div>
+                          <div className="prose prose-sm max-w-none dark:prose-invert">
+                            {message.content ? (
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                  // Custom components for better styling
+                                  p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                                  ul: ({ node, ...props }) => <ul className="list-disc ml-4 mb-2" {...props} />,
+                                  ol: ({ node, ...props }) => <ol className="list-decimal ml-4 mb-2" {...props} />,
+                                  li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                                  code: ({ node, inline, ...props }: any) =>
+                                    inline ? (
+                                      <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
+                                    ) : (
+                                      <code className="block bg-gray-100 dark:bg-gray-800 p-2 rounded my-2 overflow-x-auto" {...props} />
+                                    ),
+                                  strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
+                                  em: ({ node, ...props }) => <em className="italic" {...props} />,
+                                }}
+                              >
+                                {message.content}
+                              </ReactMarkdown>
+                            ) : (
+                              <span className="animate-pulse">Thinking...</span>
+                            )}
+                          </div>
+                          <div className="text-xs opacity-70 mt-2">
+                            {message.timestamp.toLocaleTimeString()}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
               <div ref={messagesEndRef} />

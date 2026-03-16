@@ -60,13 +60,12 @@ export async function POST(request: NextRequest) {
     const inference = await prisma.inference.create({
       data: {
         fileId,
-        patientId: file.patientId,
         inferenceType,
         inputData: inputData || {},
         outputData: stubOutput,
-        confidenceScore: 0.95, // Stub confidence score
+        confidence: 0.95, // Stub confidence score
         status: 'COMPLETED',
-        processingTimeMs: processingTime,
+        doctorId,
       },
     });
 
@@ -107,22 +106,21 @@ export async function GET(request: NextRequest) {
 
     const inferences = await prisma.inference.findMany({
       where: {
-        file: { doctorId },
-        ...(patientId && { patientId }),
+        File: { doctorId },
         ...(fileId && { fileId }),
       },
       orderBy: { createdAt: 'desc' },
       include: {
-        file: {
+        File: {
           select: {
             id: true,
             fileName: true,
-          },
-        },
-        patient: {
-          select: {
-            id: true,
-            name: true,
+            Patient: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
       },

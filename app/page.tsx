@@ -1,139 +1,343 @@
 import Link from "next/link";
+import { ArrowRight, Brain, Shield, Zap, FileText, Users, TrendingUp, Sparkles, Check, ChevronRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-      {/* Header */}
-      <header className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">C</span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16 items-center">
+            <div className="flex items-center space-x-2">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75"></div>
+                <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                ClinIntelAI
+              </span>
             </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
-              ClinIntelAI
-            </span>
+            
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+                Features
+              </a>
+              <a href="#benefits" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+                Benefits
+              </a>
+              <Link 
+                href="/auth/login"
+                className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/auth/register"
+                className="relative group"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                <div className="relative px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg text-white font-semibold">
+                  Get Started
+                </div>
+              </Link>
+            </div>
           </div>
-          <div className="flex items-center space-x-4">
-            <Link
-              href="/auth/login"
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/auth/register"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium transition-colors"
-            >
-              Get Started
-            </Link>
-          </div>
-        </nav>
-      </header>
+        </div>
+      </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-        <div className="text-center">
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            Intelligent Medical Data
-            <br />
-            <span className="text-blue-600">Management Platform</span>
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-            Securely manage patient records, upload medical data, and leverage AI-powered
-            analytics to make informed clinical decisions.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/auth/register"
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold text-lg transition-colors"
-            >
-              Start Free Trial
-            </Link>
-            <Link
-              href="#features"
-              className="border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-8 py-3 rounded-lg hover:border-gray-400 dark:hover:border-gray-500 font-semibold text-lg transition-colors"
-            >
-              Learn More
-            </Link>
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-4xl mx-auto">
+            {/* Badge */}
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 mb-8 animate-fade-in">
+              <Sparkles className="h-4 w-4 text-blue-600 mr-2" />
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                AI-Powered Medical Intelligence Platform
+              </span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-900 dark:from-white dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent">
+                Transform Medical Data
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                Into Actionable Insights
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Leverage cutting-edge AI to analyze patient data, generate intelligent reports, 
+              and make data-driven decisions faster than ever before.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link
+                href="/auth/register"
+                className="group relative inline-flex items-center justify-center"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                <div className="relative px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl text-white font-semibold flex items-center space-x-2">
+                  <span>Start Free Trial</span>
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+              
+              <button className="px-8 py-4 bg-white dark:bg-slate-800 rounded-xl text-gray-900 dark:text-white font-semibold border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all hover:shadow-lg">
+                Watch Demo
+              </button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center space-x-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>HIPAA Compliant</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>SOC 2 Certified</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="h-5 w-5 text-green-500" />
+                <span>End-to-End Encrypted</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Hero Image/Illustration */}
+          <div className="mt-20 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-3xl blur-3xl"></div>
+            <div className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl rounded-3xl border border-gray-200 dark:border-gray-700 p-8 shadow-2xl">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Mini Dashboard Preview */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 rounded-2xl p-6 border border-blue-200 dark:border-blue-800 hover:scale-105 transition-transform">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Active Patients</h3>
+                    <TrendingUp className="h-5 w-5 text-green-500" />
+                  </div>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">2,847</div>
+                  <div className="text-sm text-green-600 dark:text-green-400">+12.5% from last month</div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/50 dark:to-pink-950/50 rounded-2xl p-6 border border-purple-200 dark:border-purple-800 hover:scale-105 transition-transform">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">AI Reports</h3>
+                    <Brain className="h-5 w-5 text-purple-500" />
+                  </div>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">1,923</div>
+                  <div className="text-sm text-purple-600 dark:text-purple-400">Generated this week</div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950/50 dark:to-red-950/50 rounded-2xl p-6 border border-orange-200 dark:border-orange-800 hover:scale-105 transition-transform">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Time Saved</h3>
+                    <Zap className="h-5 w-5 text-orange-500" />
+                  </div>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">847hrs</div>
+                  <div className="text-sm text-orange-600 dark:text-orange-400">This month</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-          Key Features
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Patient Management
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Securely store and manage patient records with end-to-end encryption and HIPAA compliance.
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              Powerful Features
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Everything you need to revolutionize your medical practice
             </p>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all">
+                <div className="bg-gradient-to-br from-blue-500 to-indigo-500 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  AI-Powered Analysis
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Advanced machine learning algorithms analyze medical data and provide intelligent insights in seconds.
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              File Upload & Storage
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Upload CSV files, medical images, and documents with automatic parsing and validation.
-            </p>
-          </div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
+            {/* Feature 2 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-500 transition-all">
+                <div className="bg-gradient-to-br from-purple-500 to-pink-500 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <Shield className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Enterprise Security
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Bank-level encryption, HIPAA compliance, and SOC 2 certification ensure your data is always protected.
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              AI-Powered Analytics
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Leverage machine learning models to analyze medical data and generate actionable insights.
-            </p>
+
+            {/* Feature 3 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-orange-500 dark:hover:border-orange-500 transition-all">
+                <div className="bg-gradient-to-br from-orange-500 to-red-500 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Automated Reports
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Generate comprehensive medical reports automatically with AI-powered insights and recommendations.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-green-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-500 transition-all">
+                <div className="bg-gradient-to-br from-green-500 to-teal-500 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <Users className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Patient Management
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Comprehensive patient profiles with medical history, files, and AI-generated insights all in one place.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 5 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-600 to-amber-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-yellow-500 dark:hover:border-yellow-500 transition-all">
+                <div className="bg-gradient-to-br from-yellow-500 to-amber-500 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <Zap className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Real-Time Processing
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Lightning-fast data processing and analysis with instant results and real-time updates.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 6 */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-cyan-500 dark:hover:border-cyan-500 transition-all">
+                <div className="bg-gradient-to-br from-cyan-500 to-blue-500 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <TrendingUp className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Advanced Analytics
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Powerful analytics and visualization tools to identify trends and patterns in patient data.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="bg-blue-600 rounded-2xl p-12 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Transform Your Practice?
-          </h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-            Join hundreds of healthcare professionals using ClinIntelAI to streamline their workflow.
-          </p>
-          <Link
-            href="/auth/register"
-            className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 font-semibold text-lg transition-colors"
-          >
-            Get Started Today
-          </Link>
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur-2xl opacity-20"></div>
+            <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-12 md:p-16 text-center">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Transform Your Practice?
+              </h2>
+              <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+                Join thousands of healthcare professionals using ClinIntelAI to deliver better patient care.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/auth/register"
+                  className="group inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl"
+                >
+                  <span>Get Started Free</span>
+                  <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <button className="px-8 py-4 bg-blue-700 text-white rounded-xl font-semibold hover:bg-blue-800 transition-all border border-blue-500">
+                  Schedule Demo
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-gray-700 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p className="text-center text-gray-600 dark:text-gray-400">
-            © 2025 ClinIntelAI. All rights reserved.
-          </p>
+      <footer className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Product</h3>
+              <ul className="space-y-2">
+                <li><a href="#features" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Features</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Security</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Careers</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">API Reference</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Support</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Privacy</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Terms</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">HIPAA</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+              <Brain className="h-6 w-6 text-blue-600" />
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                ClinIntelAI
+              </span>
+            </div>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              © 2025 ClinIntelAI. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

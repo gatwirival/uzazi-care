@@ -20,15 +20,11 @@ export async function GET(
     const patient = await prisma.patient.findFirst({
       where: {
         id,
-        doctorId, // Ensure doctor can only access their own patients
+        doctorId,
       },
       include: {
-        files: {
-          orderBy: { uploadDate: 'desc' },
-        },
-        inferences: {
+        File: {
           orderBy: { createdAt: 'desc' },
-          take: 10,
         },
       },
     });
