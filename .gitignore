@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Ignore all markdown files
 *.md
+
+# Ignore all CSV files
+*.csv
