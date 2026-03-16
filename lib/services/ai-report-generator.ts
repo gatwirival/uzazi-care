@@ -85,8 +85,14 @@ export async function generateMedicalReport(
  * Get system prompt for each report type
  */
 function getSystemPrompt(reportType: ReportType): string {
-  const basePrompt = `You are an expert medical data analyst specializing in clinical decision support. 
-You analyze patient medical records with precision and provide evidence-based insights.
+  const basePrompt = `You are an expert medical data analyst specialising in women's health and clinical decision support. 
+You analyse patient medical records with precision and provide evidence-based insights across all areas of women's health including:
+- Menstrual health, PCOS, endometriosis, and reproductive conditions
+- Antenatal, intrapartum, and postnatal (postpartum) care
+- Pregnancy complications (gestational hypertension, gestational diabetes, anaemia)
+- Postpartum recovery, lactation, and postnatal mental health
+- General women's health across the lifespan
+
 Format your responses in clear, structured markdown with:
 - **Bold** for key metrics and findings
 - Bullet points for lists
@@ -161,8 +167,9 @@ ${dataContext}
 Create a comprehensive summary report that includes:
 
 1. **Patient Status Overview**
-   - Current health status based on latest measurements
-   - Key metrics summary (HbA1c, glucose, BP, BMI, etc.)
+   - Current health status based on latest measurements and visit type (antenatal, postpartum, routine, follow-up)
+   - Key metrics summary (HbA1c, glucose, BP, BMI, weight trend, etc.)
+   - Women's health context (cycle phase, gestational age if pregnant, postpartum week if applicable)
    - Overall trend direction (improving/stable/declining)
 
 2. **Recent Findings** (last 3 months)
@@ -247,24 +254,24 @@ Conduct comprehensive risk assessment and create a report that includes:
    - Risk trend (increasing/stable/decreasing)
 
 2. **Cardiovascular Risk**
-   - Based on: BP, cholesterol, BMI, diabetes control
+   - Based on: BP, cholesterol, BMI, glucose control
    - Risk factors present:
-     - Hypertension (Y/N)
+     - Hypertension (Y/N) — note if gestational
      - Dyslipidemia (Y/N)
      - Obesity (Y/N)
-     - Poor glycemic control (Y/N)
-   - 10-year CVD risk estimate (if applicable)
+     - Poor glycaemic control (Y/N)
 
-3. **Diabetes Complication Risk**
-   - Retinopathy risk (based on HbA1c duration)
-   - Nephropathy risk (based on eGFR, albumin)
-   - Neuropathy risk indicators
-   - Foot complication risk
+3. **Women's Health Specific Risk Assessment**
+   - Reproductive and hormonal risk factors (PCOS, irregular cycles, endocrine disruption)
+   - Obstetric risk indicators (if antenatal: pre-eclampsia, GDM, preterm labour)
+   - Postpartum risk factors (PPD, anaemia, perineal complications, DVT)
+   - Bone health / osteoporosis risk (if applicable)
+   - Fertility and menstrual health risk indicators
 
 4. **Metabolic Risk Assessment**
-   - Hypoglycemia risk indicators
-   - Hyperglycemia patterns
-   - Metabolic syndrome criteria
+   - Insulin resistance / glucose intolerance risk
+   - Anaemia (Hb trend, iron stores context)
+   - BMI trajectory and metabolic syndrome criteria
 
 5. **Risk Factor Details**
    For each identified risk, provide:
@@ -274,7 +281,7 @@ Conduct comprehensive risk assessment and create a report that includes:
    - Associated complications
 
 6. **Risk Mitigation Recommendations**
-   - Prioritized interventions (High/Medium/Low priority)
+   - Prioritised interventions (High/Medium/Low priority)
    - Lifestyle modifications
    - Medication adjustments to consider
    - Monitoring frequency recommendations
