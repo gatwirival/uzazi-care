@@ -177,7 +177,7 @@ export default function ChatPage() {
               };
             } else if (file.type.startsWith('image/')) {
               // For images, convert to base64
-              return new Promise((resolve) => {
+              return new Promise<{ name: string; type: string; mimeType: string; base64: string; size: number }>((resolve) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                   const base64 = reader.result as string;
@@ -195,7 +195,7 @@ export default function ChatPage() {
               });
             } else if (file.type === 'application/pdf') {
               // PDFs can also be processed
-              return new Promise((resolve) => {
+              return new Promise<{ name: string; type: string; mimeType: string; base64: string; size: number }>((resolve) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                   const base64 = reader.result as string;
