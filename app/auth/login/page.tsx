@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { Brain, Mail, Lock, ArrowRight, Sparkles, Shield } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, ArrowRight, Sparkles, Shield } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,30 +40,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 flex">
       {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:flex-1 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-500 to-pink-600"></div>
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         
         <div className="relative z-10 flex flex-col justify-center px-12 text-white">
           <div className="mb-8">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-white rounded-xl blur opacity-50"></div>
-                <div className="relative bg-white/20 backdrop-blur-sm p-3 rounded-xl border border-white/30">
-                  <Brain className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <span className="text-3xl font-bold">ClinIntelAI</span>
+              <Image src="/logo.png" alt="UzaziCare" width={44} height={44} className="rounded-xl" />
+              <span className="text-3xl font-bold">UzaziCare</span>
             </div>
             
             <h1 className="text-5xl font-bold mb-6 leading-tight">
-              Transform Patient Care with AI
+              Your Women&apos;s Health Journey Starts Here
             </h1>
-            <p className="text-xl text-blue-100 mb-12 leading-relaxed">
-              Intelligent medical data management powered by cutting-edge AI technology.
-              Make faster, data-driven decisions.
+            <p className="text-xl text-rose-100 mb-12 leading-relaxed">
+              AI-powered menstrual health, pregnancy, and postpartum care — all in one compassionate platform.
             </p>
           </div>
 
@@ -72,8 +67,8 @@ export default function LoginPage() {
                 <Sparkles className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">AI-Powered Insights</h3>
-                <p className="text-blue-100">Advanced algorithms analyze patient data instantly</p>
+                <h3 className="font-semibold text-lg mb-1">AI-Powered Health Insights</h3>
+                <p className="text-rose-100">Personalized insights for menstrual, pregnancy & postpartum health</p>
               </div>
             </div>
             
@@ -82,8 +77,8 @@ export default function LoginPage() {
                 <Shield className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">Enterprise Security</h3>
-                <p className="text-blue-100">HIPAA compliant with end-to-end encryption</p>
+                <h3 className="font-semibold text-lg mb-1">Safe &amp; Private</h3>
+                <p className="text-rose-100">Your health data is private and secure</p>
               </div>
             </div>
           </div>
@@ -96,14 +91,9 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75"></div>
-                <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg">
-                  <Brain className="h-6 w-6 text-white" />
-                </div>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                ClinIntelAI
+              <Image src="/logo.png" alt="UzaziCare" width={32} height={32} className="rounded-lg" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+                UzaziCare
               </span>
             </Link>
           </div>
@@ -120,7 +110,7 @@ export default function LoginPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 rounded-2xl blur"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-rose-500/20 to-pink-600/20 rounded-2xl blur"></div>
             <div className="relative bg-white rounded-2xl border border-gray-200 p-8 shadow-xl">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
@@ -149,8 +139,8 @@ export default function LoginPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                      placeholder="doctor@example.com"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all"
+                      placeholder="you@example.com"
                     />
                   </div>
                 </div>
@@ -172,7 +162,7 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all"
                       placeholder="••••••••"
                     />
                   </div>
@@ -183,8 +173,8 @@ export default function LoginPage() {
                   disabled={loading}
                   className="group relative w-full"
                 >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                  <div className="relative w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-500 to-pink-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                  <div className="relative w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white py-3 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
                     <span>{loading ? "Signing in..." : "Sign in"}</span>
                     {!loading && <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />}
                   </div>
@@ -198,7 +188,7 @@ export default function LoginPage() {
                   </div>
                   <div className="relative flex justify-center text-sm">
                     <span className="px-4 bg-white text-gray-500">
-                      New to ClinIntelAI?
+                      New to UzaziCare?
                     </span>
                   </div>
                 </div>
@@ -206,7 +196,7 @@ export default function LoginPage() {
                 <div className="mt-6 text-center">
                   <Link
                     href="/auth/register"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700:text-blue-300 font-semibold transition-colors"
+                    className="inline-flex items-center text-rose-600 hover:text-rose-700 font-semibold transition-colors"
                   >
                     Create an account
                     <ArrowRight className="ml-2 h-4 w-4" />

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClinIntelAI - Medical Data Management Platform",
-  description: "Securely manage patient records and leverage AI-powered analytics",
+  title: "UzaziCare - Women's Health Companion",
+  description: "AI-assisted companion for menstrual health, pregnancy, and postpartum recovery. Your trusted women's health partner.",
 };
 
 export default function RootLayout({

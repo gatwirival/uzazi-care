@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Brain, Mail, Lock, User, ArrowRight, Sparkles, Shield, Check } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, User, ArrowRight, Sparkles, Shield, Check } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -54,29 +55,24 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 flex">
       {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:flex-1 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-500 to-pink-600"></div>
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         
         <div className="relative z-10 flex flex-col justify-center px-12 text-white">
           <div className="mb-8">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-white rounded-xl blur opacity-50"></div>
-                <div className="relative bg-white/20 backdrop-blur-sm p-3 rounded-xl border border-white/30">
-                  <Brain className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <span className="text-3xl font-bold">ClinIntelAI</span>
+              <Image src="/logo.png" alt="UzaziCare" width={44} height={44} className="rounded-xl" />
+              <span className="text-3xl font-bold">UzaziCare</span>
             </div>
             
             <h1 className="text-5xl font-bold mb-6 leading-tight">
-              Join the Future of Healthcare Management
+              Join the Women&apos;s Health Revolution
             </h1>
-            <p className="text-xl text-blue-100 mb-12 leading-relaxed">
-              Register your hospital and experience AI-powered medical intelligence. 30-day free trial included.
+            <p className="text-xl text-rose-100 mb-12 leading-relaxed">
+              Register your clinic and access AI-powered women&apos;s health intelligence. 30-day free trial included.
             </p>
           </div>
 
@@ -123,12 +119,10 @@ export default function RegisterPage() {
             <Link href="/" className="inline-flex items-center space-x-2 mb-6">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75"></div>
-                <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg">
-                  <Brain className="h-6 w-6 text-white" />
-                </div>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                ClinIntelAI
+            </div>
+              <Image src="/logo.png" alt="UzaziCare" width={32} height={32} className="rounded-lg" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+                UzaziCare
               </span>
             </Link>
           </div>
@@ -136,7 +130,7 @@ export default function RegisterPage() {
           <div className="text-center mb-8">
             <h2 className="text-4xl font-bold mb-3">
               <span className="bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                Register Your Hospital
+                Register Your Clinic
               </span>
             </h2>
             <p className="text-gray-600 text-lg">
@@ -145,7 +139,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 rounded-2xl blur"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-rose-500/20 to-pink-600/20 rounded-2xl blur"></div>
             <div className="relative bg-white rounded-2xl border border-gray-200 p-8 shadow-xl">
               <form onSubmit={handleSubmit} className="space-y-5">
                 {error && (
@@ -174,8 +168,8 @@ export default function RegisterPage() {
                       value={hospitalName}
                       onChange={(e) => setHospitalName(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                      placeholder="City General Hospital"
+                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all"
+                      placeholder="Uzazi Women&apos;s Health Clinic"
                     />
                   </div>
                 </div>
@@ -260,9 +254,9 @@ export default function RegisterPage() {
                   disabled={loading}
                   className="group relative w-full mt-6"
                 >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                  <div className="relative w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
-                    <span>{loading ? "Registering hospital..." : "Register Hospital"}</span>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-500 to-pink-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                  <div className="relative w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white py-3 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                    <span>{loading ? "Registering clinic..." : "Register Clinic"}</span>
                     {!loading && <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />}
                   </div>
                 </button>
@@ -283,7 +277,7 @@ export default function RegisterPage() {
                 <div className="mt-6 text-center">
                   <Link
                     href="/auth/login"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700:text-blue-300 font-semibold transition-colors"
+                    className="inline-flex items-center text-rose-600 hover:text-rose-700 font-semibold transition-colors"
                   >
                     Sign in instead
                     <ArrowRight className="ml-2 h-4 w-4" />

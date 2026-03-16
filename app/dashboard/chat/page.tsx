@@ -43,7 +43,7 @@ export default function ChatPage() {
   const router = useRouter();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [selectedAgent, setSelectedAgent] = useState<string>("general-doctor");
+  const [selectedAgent, setSelectedAgent] = useState<string>("general-womens-health");
   const [selectedPatient, setSelectedPatient] = useState<string>("");
   const [includePatientContext, setIncludePatientContext] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -111,8 +111,8 @@ export default function ChatPage() {
     setInputMessage("");
     setError("");
 
-    // If using general-doctor, check for agent suggestions first
-    if (selectedAgent === "general-doctor" && currentInput && selectedPatient) {
+    // If using general-womens-health, check for agent suggestions first
+    if (selectedAgent === "general-womens-health" && currentInput && selectedPatient) {
       setIsLoading(true);
       try {
         // Request agent suggestion from API
@@ -128,7 +128,7 @@ export default function ChatPage() {
         if (suggestionResponse.ok) {
           const { suggestion } = await suggestionResponse.json();
           
-          if (suggestion && suggestion.agentId !== "general-doctor") {
+          if (suggestion && suggestion.agentId !== "general-womens-health") {
             // Show suggestion modal and pause sending
             setAgentSuggestion(suggestion);
             setShowSuggestionModal(true);

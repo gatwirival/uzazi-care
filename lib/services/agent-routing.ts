@@ -29,74 +29,78 @@ export async function suggestAgent(
   
   // Define agent detection patterns with symptoms and icons
   const agentPatterns = {
-    'diabetic-doctor': {
-      name: 'Diabetes Specialist',
-      specialty: 'Endocrinology - Diabetes',
-      icon: '🩺',
+    'menstrual-health': {
+      name: 'Cycle & Period Guide',
+      specialty: 'Menstrual Health',
+      icon: '🌸',
       keywords: [
-        'diabetes', 'diabetic', 'blood sugar', 'glucose', 'insulin',
-        'hba1c', 'hyperglycemia', 'hypoglycemia', 'metformin',
-        'sugar level', 'diabetic neuropathy', 'diabetic retinopathy',
-        'type 1 diabetes', 'type 2 diabetes', 'prediabetes',
+        'period', 'menstrual', 'menstruation', 'cycle', 'pms', 'cramps',
+        'spotting', 'irregular period', 'heavy bleeding', 'light period',
+        'ovulation', 'luteal', 'follicular', 'period pain', 'period late',
+        'missed period', 'amenorrhea', 'dysmenorrhea', 'endometriosis', 'pcos',
       ],
       symptoms: [
-        'frequent urination', 'excessive thirst', 'unexplained weight loss',
-        'fatigue', 'blurred vision', 'slow healing wounds', 'tingling feet',
-        'numbness in hands', 'increased hunger',
+        'period cramps', 'bloating', 'mood swings before period', 'breast tenderness',
+        'pelvic pain', 'irregular cycles', 'heavy flow', 'spotting between periods',
+        'painful periods', 'period headache', 'lower back pain during period',
       ],
       requiredCount: 1,
       weight: 2,
     },
-    'cardiology-specialist': {
-      name: 'Cardiology Specialist',
-      specialty: 'Cardiovascular Medicine',
-      icon: '❤️',
+    'pregnancy-care': {
+      name: 'Pregnancy Care Companion',
+      specialty: 'Pregnancy & Childbirth',
+      icon: '🤰',
       keywords: [
-        'heart', 'cardiac', 'cardiovascular', 'blood pressure', 'hypertension',
-        'chest pain', 'palpitations', 'arrhythmia', 'cholesterol',
-        'heart attack', 'stroke', 'coronary', 'ecg', 'ekg', 'angina',
+        'pregnant', 'pregnancy', 'trimester', 'baby', 'fetal', 'fetus',
+        'antenatal', 'prenatal', 'labour', 'labor', 'contractions', 'birth',
+        'due date', 'weeks pregnant', 'morning sickness', 'ultrasound',
+        'midwife', 'obstetrician', 'ob-gyn', 'caesarean', 'c-section',
       ],
       symptoms: [
-        'chest pain', 'shortness of breath', 'irregular heartbeat',
-        'swollen ankles', 'dizziness', 'rapid heartbeat', 'fainting',
-        'heart palpitations', 'chest pressure',
+        'morning sickness', 'nausea during pregnancy', 'pregnancy cramps',
+        'fetal movement', 'swollen feet during pregnancy', 'back pain in pregnancy',
+        'spotting during pregnancy', 'high blood pressure pregnancy',
+        'gestational diabetes', 'preeclampsia signs',
       ],
       requiredCount: 1,
       weight: 2,
     },
-    'nephrology-specialist': {
-      name: 'Kidney Specialist',
-      specialty: 'Nephrology',
-      icon: '🫘',
+    'postpartum-recovery': {
+      name: 'Postpartum Recovery Guide',
+      specialty: 'Postpartum Care',
+      icon: '👶',
       keywords: [
-        'kidney', 'renal', 'nephrology', 'dialysis', 'creatinine',
-        'egfr', 'proteinuria', 'kidney disease', 'ckd', 'nephropathy',
-        'kidney failure', 'kidney stones', 'uremia',
+        'postpartum', 'after birth', 'after delivery', 'breastfeeding',
+        'newborn', 'baby blues', 'ppd', 'postnatal', 'lactation', 'nipple',
+        'lochia', 'c-section recovery', 'episiotomy', 'perineal',
+        'milk supply', 'latch', 'pumping breast milk',
       ],
       symptoms: [
-        'reduced urination', 'blood in urine', 'foamy urine',
-        'swelling in legs', 'fatigue', 'nausea', 'confusion',
-        'back pain', 'flank pain',
+        'postpartum depression', 'excessive crying after birth', 'low milk supply',
+        'breastfeeding pain', 'wound pain after delivery', 'incontinence after birth',
+        'fatigue after delivery', 'baby not latching', 'engorgement',
       ],
       requiredCount: 1,
       weight: 2,
     },
-    'endocrinology-specialist': {
-      name: 'Endocrinology Specialist',
-      specialty: 'Endocrinology & Metabolism',
-      icon: '⚕️',
+    'emergency-safety': {
+      name: 'Emergency & Safety Guide',
+      specialty: 'Emergency Triage',
+      icon: '🚨',
       keywords: [
-        'thyroid', 'hormone', 'endocrine', 'pituitary', 'adrenal',
-        'metabolic', 'osteoporosis', 'menopause', 'testosterone',
-        'growth hormone', 'cortisol', 'hashimoto', 'graves',
+        'emergency', 'danger', 'severe', 'urgent', 'heavy bleeding',
+        'unconscious', 'fit', 'seizure', 'eclampsia', 'collapse',
+        'cannot breathe', 'chest pain', 'ectopic', 'miscarriage',
+        'extreme pain', 'high fever', 'convulsion',
       ],
       symptoms: [
-        'weight changes', 'mood swings', 'heat intolerance',
-        'cold intolerance', 'hair loss', 'irregular periods',
-        'bone pain', 'muscle weakness',
+        'heavy uncontrolled bleeding', 'severe abdominal pain', 'fainting',
+        'blurred vision in pregnancy', 'severe headache pregnancy', 'can\'t feel baby move',
+        'high fever during pregnancy', 'leaking fluid before labour',
       ],
       requiredCount: 1,
-      weight: 2,
+      weight: 3,
     },
   };
 
@@ -151,32 +155,32 @@ export async function suggestAgent(
       patientConditions = diagnoses.map(d => d.description);
       const diagnosisText = patientConditions.join(' ').toLowerCase();
 
-      // Boost diabetic-doctor if patient has diabetes
-      if (diagnosisText.includes('diabetes')) {
-        scores['diabetic-doctor'] = scores['diabetic-doctor'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
-        scores['diabetic-doctor'].score += 5;
-        scores['diabetic-doctor'].matchedKeywords.push('existing diabetes diagnosis');
+      // Boost menstrual-health if patient has cycle-related conditions
+      if (/period|menstrual|pcos|endometriosis|cycle/i.test(diagnosisText)) {
+        scores['menstrual-health'] = scores['menstrual-health'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
+        scores['menstrual-health'].score += 5;
+        scores['menstrual-health'].matchedKeywords.push('existing menstrual condition');
       }
 
-      // Boost cardiology if patient has cardiovascular conditions
-      if (/heart|cardiac|hypertension|cardiovascular/i.test(diagnosisText)) {
-        scores['cardiology-specialist'] = scores['cardiology-specialist'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
-        scores['cardiology-specialist'].score += 5;
-        scores['cardiology-specialist'].matchedKeywords.push('existing cardiovascular condition');
+      // Boost pregnancy-care if patient has obstetric conditions
+      if (/pregnan|trimester|antenatal|gestational/i.test(diagnosisText)) {
+        scores['pregnancy-care'] = scores['pregnancy-care'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
+        scores['pregnancy-care'].score += 5;
+        scores['pregnancy-care'].matchedKeywords.push('existing pregnancy condition');
       }
 
-      // Boost nephrology if patient has kidney disease
-      if (/kidney|renal|nephro/i.test(diagnosisText)) {
-        scores['nephrology-specialist'] = scores['nephrology-specialist'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
-        scores['nephrology-specialist'].score += 5;
-        scores['nephrology-specialist'].matchedKeywords.push('existing kidney condition');
+      // Boost postpartum if patient has postnatal conditions
+      if (/postpartum|postnatal|breastfeed|ppd/i.test(diagnosisText)) {
+        scores['postpartum-recovery'] = scores['postpartum-recovery'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
+        scores['postpartum-recovery'].score += 5;
+        scores['postpartum-recovery'].matchedKeywords.push('existing postpartum condition');
       }
 
-      // Boost endocrinology if patient has endocrine conditions
-      if (/thyroid|hormone|endocrine/i.test(diagnosisText)) {
-        scores['endocrinology-specialist'] = scores['endocrinology-specialist'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
-        scores['endocrinology-specialist'].score += 5;
-        scores['endocrinology-specialist'].matchedKeywords.push('existing endocrine condition');
+      // Boost emergency-safety if patient has high-risk conditions
+      if (/eclampsia|preeclampsia|haemorrhage|hemorrhage|ectopic/i.test(diagnosisText)) {
+        scores['emergency-safety'] = scores['emergency-safety'] || { score: 0, matchedKeywords: [], matchedSymptoms: [] };
+        scores['emergency-safety'].score += 5;
+        scores['emergency-safety'].matchedKeywords.push('existing high-risk condition');
       }
     } catch (error) {
       console.error('Error fetching patient diagnoses for agent suggestion:', error);
