@@ -54,49 +54,21 @@ A Next.js-based platform for medical professionals to manage patient data, uploa
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Local Development
 
-- Node.js 18+ or Bun
-- pnpm (or npm/yarn)
-- Neon account (https://neon.tech)
+See [ENV_SETUP_GUIDE.md](./ENV_SETUP_GUIDE.md) for local development setup.
 
-### Installation
+### Deploy to Production (Vercel)
 
-1. **Clone and install dependencies**
-   ```bash
-   pnpm install
-   ```
+**👉 See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete Vercel deployment guide**
 
-2. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Update `.env` with your values:
-   - `DATABASE_URL`: Your Neon connection string
-   - `DIRECT_URL`: Your Neon direct connection string
-   - `ENCRYPTION_KEY`: A 32-character random string
-   - Other configuration values
+Quick deploy:
+1. Push to GitHub
+2. Import project in Vercel
+3. Add environment variables (DATABASE_URL, ENCRYPTION_KEY, etc.)
+4. Deploy!
 
-3. **Initialize the database**
-   ```bash
-   # Generate Prisma Client
-   pnpm exec prisma generate
-   
-   # Push schema to database (development)
-   pnpm exec prisma db push
-   
-   # Or create a migration (production)
-   pnpm exec prisma migrate dev --name init
-   ```
-
-4. **Start the development server**
-   ```bash
-   pnpm dev
-   ```
-
-5. **Open the app**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+---
 
 ## 📁 Project Structure
 

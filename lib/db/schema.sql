@@ -1,4 +1,4 @@
--- ClinIntelAI Database Schema
+use -- ClinIntelAI Database Schema
 -- Run this in your Neon SQL editor to set up the database
 
 -- Enable UUID extension
