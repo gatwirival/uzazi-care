@@ -51,6 +51,24 @@ export default function ChatPage() {
         }),
       });
 
+      if (!res.ok) {
+        let message = `Request failed (${res.status})`;
+        try {
+          const errorData = await res.json();
+          message = errorData?.error ?? errorData?.response ?? message;
+        } catch {
+          // ignore json parse error
+        }
+
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = { role: "assistant", content: message };
+          return updated;
+        });
+        setIsStreaming(false);
+        return;
+      }
+
       // JSON fallback (emergency fast-path or no API key)
       if (res.headers.get("content-type")?.includes("application/json")) {
         const data = await res.json();
@@ -67,15 +85,23 @@ export default function ChatPage() {
       // Stream SSE chunks from the AI provider
       const reader = res.body!.getReader();
       const decoder = new TextDecoder();
+      let buffer = "";
       let accumulated = "";
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
+        buffer += chunk;
+
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
         for (const line of lines) {
-          const jsonStr = line.replace("data: ", "").trim();
+          const trimmed = line.trim();
+          if (!trimmed.startsWith("data:")) continue;
+
+          const jsonStr = trimmed.replace(/^data:\s*/, "");
           if (jsonStr === "[DONE]") continue;
           try {
             const parsed = JSON.parse(jsonStr);
@@ -90,6 +116,37 @@ export default function ChatPage() {
             // skip malformed chunks
           }
         }
+      }
+
+      if (buffer.trim().startsWith("data:")) {
+        const jsonStr = buffer.trim().replace(/^data:\s*/, "");
+        if (jsonStr && jsonStr !== "[DONE]") {
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const delta = parsed.choices?.[0]?.delta?.content ?? "";
+            if (delta) {
+              accumulated += delta;
+              setMessages((prev) => {
+                const updated = [...prev];
+                updated[updated.length - 1] = { role: "assistant", content: accumulated };
+                return updated;
+              });
+            }
+          } catch {
+            // skip malformed trailing chunk
+          }
+        }
+      }
+
+      if (!accumulated.trim()) {
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            role: "assistant",
+            content: "No response from AI service. Check server logs and environment variables.",
+          };
+          return updated;
+        });
       }
     } catch {
       setMessages((prev) => {

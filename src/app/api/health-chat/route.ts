@@ -8,6 +8,9 @@ import {
 } from "@/lib/ai/agents";
 import type { ChatMessage } from "@/lib/ai/ai-client";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 const STAGE_AGENT: Record<LifeStage, { systemPrompt: string }> = {
   menstrual: MENSTRUAL_HEALTH_AGENT,
   pregnancy: PREGNANCY_CARE_AGENT,
@@ -68,6 +71,7 @@ export async function POST(req: Request) {
         headers: {
           "Content-Type": "text/event-stream",
           "Cache-Control": "no-cache",
+          Connection: "keep-alive",
         },
       });
     } catch (llmError) {
