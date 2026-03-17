@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -24,22 +22,44 @@
 .DS_Store
 *.pem
 
-# debug
+# ── Secrets / env files ───────────────────────────────────────────────────────
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+# Allow only the example template
+!.env.example
+
+# ── Credentials & service account keys ───────────────────────────────────────
+*.json.key
+service-account*.json
+gcloud-*.json
+google-credentials*.json
+*-credentials.json
+credentials.json
+
+# ── Database ──────────────────────────────────────────────────────────────────
+prisma/dev.db
+prisma/dev.db-journal
+*.db
+*.db-journal
+
+# ── Debug logs ────────────────────────────────────────────────────────────────
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
-!.env.example
-
-# local prisma sqlite database
-prisma/dev.db
-
-# vercel
+# ── Vercel ────────────────────────────────────────────────────────────────────
 .vercel
 
-# typescript
+# ── TypeScript ────────────────────────────────────────────────────────────────
 *.tsbuildinfo
 next-env.d.ts
+
+# ── uzazi-care is now merged — keep the folder during migration only ──────────
+# uzazi-care/   ← uncomment this line once migration is complete
