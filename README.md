@@ -66,9 +66,12 @@ This app provides educational guidance only and does not replace licensed medica
 ## Contributing
 
 1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature`
-3. Make changes and commit: `git commit -m "Add feature"`
-4. Push to your branch: `git push origin feature/your-feature`
-5. Open a pull request
+2. `git clone https://github.com/gatwirival/uzazi-care.git`
+3. Navigate into the cloned directory:
+`cd repository-name`
+4. Create a new branch: `git checkout -b feature/your-feature`
+5. Make changes and commit: `git commit -m "Add feature"`
+6. Push to your branch: `git push origin feature/your-feature`
+7. Open a pull request
 
 For full contribution workflow and standards, see [CONTRIBUTING.md](./CONTRIBUTING.md).
