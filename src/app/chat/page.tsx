@@ -23,6 +23,28 @@ export default function ChatPage() {
   const [stage, setStage] = useState<LifeStage>("menstrual");
   const [isStreaming, setIsStreaming] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const starterQuestions: Record<LifeStage, string[]> = {
+    menstrual: [
+      "Why is my period late this month?",
+      "What helps with strong menstrual cramps?",
+      "When should I worry about heavy bleeding during my period?",
+      "What cycle symptoms are normal before my period starts?",
+    ],
+    pregnancy: [
+      "What can help with morning sickness safely?",
+      "Which pregnancy symptoms need urgent medical care?",
+      "What foods are best for healthy pregnancy nutrition?",
+      "How can I tell if reduced baby movement is concerning?",
+    ],
+    postpartum: [
+      "What recovery symptoms are normal after childbirth?",
+      "How can I care for myself while breastfeeding?",
+      "When should postpartum bleeding or pain be checked urgently?",
+      "What are signs of postpartum depression that need support?",
+    ],
+  };
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -169,6 +191,11 @@ export default function ChatPage() {
     }
   }
 
+  function chooseQuestion(question: string) {
+    setInput(question);
+    inputRef.current?.focus();
+  }
+
   return (
     <div className="flex min-h-screen flex-col" style={{ background: "var(--background)" }}>
       <AppNav />
@@ -205,12 +232,28 @@ export default function ChatPage() {
       {/* Message list */}
       <main className="mx-auto w-full max-w-3xl flex-1 overflow-y-auto px-4 py-4 sm:px-8">
         {messages.length === 0 && (
-          <div className="mt-12 text-center text-sm text-zinc-400">
-            <p className="text-4xl">🌸</p>
-            <p className="mt-2 font-medium text-zinc-500">Ask me anything about your health</p>
-            <p className="mt-1 text-xs">
-              Try: &ldquo;Why is my period late?&rdquo; &middot; &ldquo;What foods help with morning sickness?&rdquo; &middot; &ldquo;How do I know if my pain is normal?&rdquo;
-            </p>
+          <div className="mt-12 rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-6 text-sm shadow-sm">
+            <div className="text-center text-zinc-400">
+              <p className="text-4xl">🌸</p>
+              <p className="mt-2 font-medium text-zinc-600">Choose a question or type your own</p>
+              <p className="mt-1 text-xs text-zinc-500">
+                Pick a starter below, edit it if you want, or ask a custom health question.
+              </p>
+            </div>
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {starterQuestions[stage].map((question) => (
+                <button
+                  key={question}
+                  type="button"
+                  onClick={() => chooseQuestion(question)}
+                  className="rounded-2xl border border-blue-100 bg-white px-4 py-3 text-left text-sm text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50"
+                >
+                  <span className="block font-medium text-zinc-800">{question}</span>
+                  <span className="mt-1 block text-xs text-blue-600">Tap to use this question</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
@@ -259,31 +302,48 @@ export default function ChatPage() {
         className="sticky bottom-0 border-t bg-white/90 px-4 py-3 backdrop-blur sm:px-8"
         style={{ borderColor: "rgba(107,39,55,0.1)" }}
       >
-        <div className="mx-auto flex max-w-3xl items-end gap-2">
-          <textarea
-            rows={2}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask a health question… (Enter to send, Shift+Enter for new line)"
-            disabled={isStreaming}
-            className="flex-1 resize-none rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-60"
-          />
-          <button
-            onClick={sendMessage}
-            disabled={isStreaming || !input.trim()}
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm transition-opacity disabled:opacity-40"
-            style={{ background: "linear-gradient(135deg, #3b82f6, #6366f1)" }}
-            aria-label="Send"
-          >
-            {isStreaming ? (
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
-                <path d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.926A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.896 28.896 0 0 0 15.293-7.154.75.75 0 0 0 0-1.115A28.897 28.897 0 0 0 3.105 2.289Z" />
-              </svg>
-            )}
-          </button>
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-3 flex flex-wrap gap-2">
+            {starterQuestions[stage].map((question) => (
+              <button
+                key={question}
+                type="button"
+                onClick={() => chooseQuestion(question)}
+                disabled={isStreaming}
+                className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 transition hover:border-blue-300 hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {question}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-end gap-2">
+            <textarea
+              ref={inputRef}
+              rows={2}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Choose a starter above or type your own question… (Enter to send, Shift+Enter for new line)"
+              disabled={isStreaming}
+              className="flex-1 resize-none rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-60"
+            />
+            <button
+              onClick={sendMessage}
+              disabled={isStreaming || !input.trim()}
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm transition-opacity disabled:opacity-40"
+              style={{ background: "linear-gradient(135deg, #3b82f6, #6366f1)" }}
+              aria-label="Send"
+            >
+              {isStreaming ? (
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+                  <path d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.926A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.896 28.896 0 0 0 15.293-7.154.75.75 0 0 0 0-1.115A28.897 28.897 0 0 0 3.105 2.289Z" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
         <p className="mt-1 text-center text-xs text-zinc-400">
           Educational guidance only · Not a substitute for professional medical advice
