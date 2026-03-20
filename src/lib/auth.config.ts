@@ -31,6 +31,7 @@ declare module "next-auth" {
  * runtime can bundle it within Vercel's 1 MB limit.
  */
 export const authConfig = {
+  trustHost: true,
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
