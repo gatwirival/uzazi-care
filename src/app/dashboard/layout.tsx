@@ -26,13 +26,13 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#FDFAF5" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--background)" }}>
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 bg-white z-40" style={{ borderRight: "1px solid rgba(107,39,55,0.1)" }}>
         {/* Logo */}
         <div className="h-16 flex items-center px-6" style={{ borderBottom: "1px solid rgba(107,39,55,0.1)" }}>
           <Image src="/logo.png" alt="UzaziCare" width={30} height={30} className="rounded" />
-          <span className="ml-2.5 font-display font-bold text-xl tracking-tight" style={{ color: "#6B2737" }}>
+          <span className="ml-2.5 font-display font-bold text-xl tracking-tight" style={{ color: "var(--brand-dark)" }}>
             UzaziCare
           </span>
         </div>
@@ -112,8 +112,8 @@ export default async function DashboardLayout({
         </nav>
 
         {/* Health pillars reminder */}
-        <div className="mx-4 mb-4 p-3 rounded-xl" style={{ backgroundColor: "#F5E4DC", border: "1px solid rgba(107,39,55,0.12)" }}>
-          <p className="text-xs font-bold uppercase mb-2" style={{ color: "#6B2737", letterSpacing: "0.14em" }}>Care Areas</p>
+        <div className="mx-4 mb-4 p-3 rounded-xl" style={{ backgroundColor: "var(--brand-light)", border: "1px solid rgba(176,58,122,0.2)" }}>
+          <p className="text-xs font-bold uppercase mb-2" style={{ color: "var(--brand-dark)", letterSpacing: "0.14em" }}>Care Areas</p>
           <div className="space-y-1">
             <div className="flex items-center text-xs text-gray-600"><span className="mr-2">🌸</span> Menstrual Health</div>
             <div className="flex items-center text-xs text-gray-600"><span className="mr-2">🤰</span> Pregnancy Care</div>
@@ -125,7 +125,7 @@ export default async function DashboardLayout({
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-white" style={{ borderTop: "1px solid rgba(107,39,55,0.1)" }}>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: "#6B2737" }}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--brand-dark)" }}>
                 <span className="text-white font-semibold text-sm">
                   {session?.user?.name?.[0]?.toUpperCase() || 'U'}
                 </span>
@@ -164,7 +164,7 @@ export default async function DashboardLayout({
         <header className="sticky top-0 z-30 h-16 bg-white" style={{ borderBottom: "1px solid rgba(107,39,55,0.1)" }}>
           <div className="h-full px-8 flex items-center justify-between">
             <div>
-              <h1 className="font-display font-bold text-xl" style={{ color: "#6B2737", letterSpacing: "-0.02em" }}>
+              <h1 className="font-display font-bold text-xl" style={{ color: "var(--brand-dark)", letterSpacing: "-0.02em" }}>
                 Women&apos;s Health Platform
               </h1>
             </div>
@@ -172,7 +172,7 @@ export default async function DashboardLayout({
             <div className="flex items-center gap-3">
               <span
                 className="px-4 py-1.5 rounded-full text-xs font-semibold"
-                style={{ backgroundColor: "#F5E4DC", color: "#6B2737" }}
+                style={{ backgroundColor: "var(--brand-light)", color: "var(--brand-dark)" }}
               >
                 🌸 AI-Powered Care
               </span>

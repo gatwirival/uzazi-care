@@ -64,7 +64,7 @@ export default function DoctorsClient({ doctors, hospitalName }: DoctorsClientPr
         </div>
         <Link
           href="/dashboard/doctors/new"
-          className="group relative px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
+          className="group relative px-6 py-3 bg-gradient-to-r from-rose-600 to-pink-600 text-white rounded-xl font-medium hover:from-rose-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl"
         >
           <span className="flex items-center gap-2">
             <svg
@@ -109,7 +109,7 @@ export default function DoctorsClient({ doctors, hospitalName }: DoctorsClientPr
             </p>
             <Link
               href="/dashboard/doctors/new"
-              className="mt-6 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="mt-6 inline-flex items-center px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors"
             >
               Add your first doctor
             </Link>
@@ -158,7 +158,7 @@ export default function DoctorsClient({ doctors, hospitalName }: DoctorsClientPr
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {doctor.isActive ? (
-                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">
+                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-rose-100 text-rose-800">
                           Active
                         </span>
                       ) : (
@@ -175,7 +175,7 @@ export default function DoctorsClient({ doctors, hospitalName }: DoctorsClientPr
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm space-x-2">
                       <Link
                         href={`/dashboard/doctors/${doctor.id}/edit`}
-                        className="text-blue-600 hover:text-blue-700 font-medium"
+                        className="text-rose-700 hover:text-rose-800 font-medium"
                       >
                         Edit
                       </Link>

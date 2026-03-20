@@ -61,7 +61,7 @@ export default function NewPatientPage() {
       <div className="mb-8">
         <Link
           href="/dashboard/patients"
-          className="text-blue-600 hover:text-blue-700 font-medium mb-4 inline-flex items-center"
+          className="text-rose-700 hover:text-rose-800 font-medium mb-4 inline-flex items-center"
         >
           <svg
             className="w-5 h-5 mr-1"
@@ -109,7 +109,7 @@ export default function NewPatientPage() {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                 placeholder="John Doe"
               />
             </div>
@@ -127,7 +127,7 @@ export default function NewPatientPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                 placeholder="patient@example.com"
               />
             </div>
@@ -145,7 +145,7 @@ export default function NewPatientPage() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                 placeholder="+1 (555) 123-4567"
               />
             </div>
@@ -163,7 +163,7 @@ export default function NewPatientPage() {
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
               />
             </div>
 
@@ -179,7 +179,7 @@ export default function NewPatientPage() {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
               >
                 <option value="">Select gender</option>
                 <option value="MALE">Male</option>
@@ -202,7 +202,7 @@ export default function NewPatientPage() {
                 name="medicalRecordNumber"
                 value={formData.medicalRecordNumber}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                 placeholder="MRN-12345"
               />
             </div>
@@ -221,7 +221,7 @@ export default function NewPatientPage() {
               rows={4}
               value={formData.notes}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent"
               placeholder="Additional notes about the patient..."
             />
           </div>
@@ -229,14 +229,14 @@ export default function NewPatientPage() {
           <div className="flex justify-end space-x-4">
             <Link
               href="/dashboard/patients"
-              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+              className="px-6 py-3 border border-rose-200 rounded-lg text-rose-900 hover:bg-rose-50 font-medium transition-colors"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-rose-600 text-white rounded-lg hover:bg-rose-700 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating..." : "Create Patient"}
             </button>

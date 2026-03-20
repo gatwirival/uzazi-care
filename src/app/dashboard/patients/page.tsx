@@ -34,7 +34,7 @@ export default async function PatientsPage() {
         </div>
         <Link
           href="/dashboard/patients/new"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+          className="bg-rose-600 text-white px-6 py-3 rounded-lg hover:bg-rose-700 font-semibold transition-colors"
         >
           Add Patient
         </Link>
@@ -66,7 +66,7 @@ export default async function PatientsPage() {
             </p>
             <Link
               href="/dashboard/patients/new"
-              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+              className="inline-block bg-rose-600 text-white px-6 py-3 rounded-lg hover:bg-rose-700 font-semibold transition-colors"
             >
               Add Patient
             </Link>
@@ -122,7 +122,7 @@ export default async function PatientsPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                       <Link
                         href={`/dashboard/patients/${patient.id}`}
-                        className="text-blue-600 hover:text-blue-700 font-medium"
+                        className="text-rose-700 hover:text-rose-800 font-medium"
                       >
                         View
                       </Link>

@@ -95,7 +95,7 @@ export default function EditDoctorPage({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
       </div>
     );
   }
@@ -105,7 +105,7 @@ export default function EditDoctorPage({
       <div className="mb-8">
         <Link
           href="/dashboard/doctors"
-          className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2"
+          className="text-rose-700 hover:text-rose-800 font-medium flex items-center gap-2"
         >
           <svg
             className="w-5 h-5"
@@ -152,7 +152,7 @@ export default function EditDoctorPage({
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
             />
           </div>
 
@@ -169,7 +169,7 @@ export default function EditDoctorPage({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
             />
           </div>
 
@@ -179,7 +179,7 @@ export default function EditDoctorPage({
               id="isActive"
               checked={isActive}
               onChange={(e) => setIsActive(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-rose-600 focus:ring-rose-500 border-rose-300 rounded"
             />
             <label
               htmlFor="isActive"
@@ -196,7 +196,7 @@ export default function EditDoctorPage({
                 id="changePassword"
                 checked={changePassword}
                 onChange={(e) => setChangePassword(e.target.checked)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-rose-600 focus:ring-rose-500 border-rose-300 rounded"
               />
               <label
                 htmlFor="changePassword"
@@ -222,7 +222,7 @@ export default function EditDoctorPage({
                     onChange={(e) => setPassword(e.target.value)}
                     required={changePassword}
                     minLength={8}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                    className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
                     placeholder="••••••••"
                   />
                 </div>
@@ -241,7 +241,7 @@ export default function EditDoctorPage({
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required={changePassword}
                     minLength={8}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                    className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
                     placeholder="••••••••"
                   />
                 </div>
@@ -253,7 +253,7 @@ export default function EditDoctorPage({
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-rose-600 to-pink-600 text-white rounded-xl font-medium hover:from-rose-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>

@@ -111,6 +111,21 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
   } catch (error) {
     console.error('Hospital registration error:', error);
+    
+    // Detailed error logging for debugging
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    
+    // Check if it's a Prisma unique constraint error
+    if (error instanceof Error && error.message.includes('Unique constraint failed')) {
+      return NextResponse.json(
+        { error: 'Email already exists in system' },
+        { status: 409 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Internal server error during registration' },
       { status: 500 }

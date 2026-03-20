@@ -66,6 +66,18 @@ model Diagnosis {
   @@index([medicalRecordId])
 }
 
+model EducationVideo {
+  id        String   @id @default(uuid())
+  title     String
+  fileName  String
+  url       String
+  publicId  String   @unique
+  fileSize  Int
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
 model File {
   id            String          @id @default(uuid())
   fileName      String

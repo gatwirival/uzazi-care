@@ -203,11 +203,11 @@ export default function ChatPage() {
       {/* Header */}
       <section
         className="mx-4 mt-4 overflow-hidden rounded-2xl p-5 text-white shadow-sm sm:mx-8"
-        style={{ background: "linear-gradient(135deg, #3b82f6, #6366f1)" }}
+        style={{ background: "linear-gradient(135deg, var(--brand-dark), var(--brand))" }}
       >
         <p className="text-2xl">💬</p>
         <h1 className="mt-1 text-xl font-bold">AI Chat Health Companion</h1>
-        <p className="mt-0.5 text-xs text-blue-100">
+        <p className="mt-0.5 text-xs text-pink-100">
           Powered by AI guidance · Educational support only — emergencies need urgent care
         </p>
 
@@ -220,7 +220,7 @@ export default function ChatPage() {
               className="rounded-full px-3 py-1 text-xs font-semibold transition-all"
               style={{
                 background: stage === s ? "white" : "rgba(255,255,255,0.2)",
-                color: stage === s ? "#3b82f6" : "white",
+                color: stage === s ? "var(--brand)" : "white",
               }}
             >
               {STAGE_LABELS[s]}
@@ -232,7 +232,7 @@ export default function ChatPage() {
       {/* Message list */}
       <main className="mx-auto w-full max-w-3xl flex-1 overflow-y-auto px-4 py-4 sm:px-8">
         {messages.length === 0 && (
-          <div className="mt-12 rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-6 text-sm shadow-sm">
+          <div className="mt-12 rounded-3xl border border-rose-100 bg-gradient-to-br from-rose-50 via-white to-pink-50 p-6 text-sm shadow-sm">
             <div className="text-center text-zinc-400">
               <p className="text-4xl">🌸</p>
               <p className="mt-2 font-medium text-zinc-600">Choose a question or type your own</p>
@@ -247,10 +247,10 @@ export default function ChatPage() {
                   key={question}
                   type="button"
                   onClick={() => chooseQuestion(question)}
-                  className="rounded-2xl border border-blue-100 bg-white px-4 py-3 text-left text-sm text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50"
+                  className="rounded-2xl border border-rose-100 bg-white px-4 py-3 text-left text-sm text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:border-rose-300 hover:bg-rose-50"
                 >
                   <span className="block font-medium text-zinc-800">{question}</span>
-                  <span className="mt-1 block text-xs text-blue-600">Tap to use this question</span>
+                  <span className="mt-1 block text-xs text-rose-700">Tap to use this question</span>
                 </button>
               ))}
             </div>
@@ -263,7 +263,7 @@ export default function ChatPage() {
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                   msg.role === "user"
-                    ? "rounded-br-none bg-blue-500 text-white"
+                    ? "rounded-br-none bg-rose-500 text-white"
                     : "rounded-bl-none border border-zinc-200 bg-white text-zinc-800"
                 }`}
               >
@@ -310,7 +310,7 @@ export default function ChatPage() {
                 type="button"
                 onClick={() => chooseQuestion(question)}
                 disabled={isStreaming}
-                className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 transition hover:border-blue-300 hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-medium text-rose-700 transition hover:border-rose-300 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {question}
               </button>
@@ -326,13 +326,13 @@ export default function ChatPage() {
               onKeyDown={handleKeyDown}
               placeholder="Choose a starter above or type your own question… (Enter to send, Shift+Enter for new line)"
               disabled={isStreaming}
-              className="flex-1 resize-none rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-60"
+              className="flex-1 resize-none rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 disabled:opacity-60"
             />
             <button
               onClick={sendMessage}
               disabled={isStreaming || !input.trim()}
               className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm transition-opacity disabled:opacity-40"
-              style={{ background: "linear-gradient(135deg, #3b82f6, #6366f1)" }}
+              style={{ background: "linear-gradient(135deg, var(--brand-dark), var(--brand))" }}
               aria-label="Send"
             >
               {isStreaming ? (

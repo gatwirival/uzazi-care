@@ -56,7 +56,7 @@ export default function NewDoctorPage() {
       <div className="mb-8">
         <Link
           href="/dashboard/doctors"
-          className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2"
+          className="text-rose-700 hover:text-rose-800 font-medium flex items-center gap-2"
         >
           <svg
             className="w-5 h-5"
@@ -103,7 +103,7 @@ export default function NewDoctorPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
               placeholder="Dr. John Smith"
             />
           </div>
@@ -121,7 +121,7 @@ export default function NewDoctorPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
               placeholder="doctor@hospital.com"
             />
           </div>
@@ -140,7 +140,7 @@ export default function NewDoctorPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
               placeholder="••••••••"
             />
           </div>
@@ -159,7 +159,7 @@ export default function NewDoctorPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+              className="w-full px-4 py-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-transparent bg-white text-gray-900"
               placeholder="••••••••"
             />
           </div>
@@ -168,13 +168,13 @@ export default function NewDoctorPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-rose-600 to-pink-600 text-white rounded-xl font-medium hover:from-rose-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating..." : "Create Doctor"}
             </button>
             <Link
               href="/dashboard/doctors"
-              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 border border-rose-200 text-rose-900 rounded-xl font-medium hover:bg-rose-50 transition-colors"
             >
               Cancel
             </Link>
