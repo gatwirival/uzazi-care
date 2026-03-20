@@ -3,7 +3,7 @@ marp: true
 theme: default
 paginate: true
 title: Uzazi Care Pitch Deck
-description: Investor pitch deck for Uzazi Care / Afya Women Health Companion
+description:  pitch deck for Uzazi Care / Afya Women Health Companion
 ---
 
 # Uzazi Care
@@ -129,25 +129,33 @@ Goes beyond chat into patient records, file handling, medical ingestion, and AI-
 
 # Business model
 
-## Primary model: B2B / B2B2C subscriptions
-Hospitals and clinics pay a recurring subscription for:
+## Primary model: B2B / B2B2C SaaS subscriptions
+Hospitals and clinics pay monthly or annual subscriptions based on active providers and patient volume.
 
-- doctor access
-- patient management
-- AI chat and guided support
-- reporting and workflow tools
-- billing and access control
+### What is included
+- provider seats (doctor dashboard and care workflows)
+- patient records and file ingestion
+- AI-assisted chat and report generation
+- role-based access, billing controls, and support
 
-## Secondary model: consumer premium features
-Potential consumer monetization can include:
+### Packaging approach
+- Starter: small clinics beginning digital follow-up
+- Growth: mid-size facilities with multiple clinicians
+- Enterprise: hospital groups needing admin controls and custom SLAs
 
-- advanced cycle insights
-- premium pregnancy tracking
-- personalized postpartum programs
-- telehealth or referral partnerships
+## Secondary revenue streams
+- implementation and onboarding fees for new facilities
+- optional premium analytics and outcome reporting modules
+- referral/partnership revenue from telehealth, diagnostics, and pharmacy networks (where compliant)
+- future consumer premium upgrades for advanced menstrual, pregnancy, and postpartum programs
 
-## Current platform signal
-The product already includes subscription status management and M-Pesa payment integration, supporting a clear path to revenue collection.
+## Unit economics focus
+- high gross margins from software delivery
+- expansion revenue through additional provider seats and facilities
+- retention driven by workflow embedding and continuity of patient data
+
+## Revenue readiness today
+The platform already includes subscription state management and M-Pesa payment integration, enabling immediate monetization with partner facilities.
 
 ---
 
@@ -181,25 +189,35 @@ Uzazi Care sits at the intersection of:
 
 # Go-to-market strategy
 
-## Phase 1: Clinic and hospital pilots
-- Partner with maternity and women's health providers
-- Offer pilot deployments with subscription onboarding
-- Use provider workflows to validate retention and ROI
+## Beachhead segment
+Start with maternity clinics, women's health practices, and outpatient hospitals that need structured follow-up and patient education at low operational cost.
 
-## Phase 2: Community growth
-- Reach women directly through education-led acquisition
-- Build trust through pregnancy, menstrual, and postpartum content
-- Drive referrals from care providers and maternal health communities
+## Phase 1: Pilot conversion (0-6 months)
+- secure pilot partners through founder-led sales and clinical networks
+- deploy in 2-5 facilities and onboard care teams quickly
+- prove outcomes: clinician time saved, repeat engagement, and escalation compliance
+- convert pilots to paid subscriptions at end of pilot window
 
-## Phase 3: Strategic partnerships
-- hospitals
-- insurers
-- NGOs
-- maternal health programs
-- pharmacy and diagnostics partners
+## Phase 2: Expansion within facilities (6-12 months)
+- expand from initial champions to full department usage
+- increase seat count and patient volume within existing accounts
+- establish case studies and referral loops between facilities
 
-## Growth engine
-Educational value + clinical utility + safety trust.
+## Phase 3: Channel partnerships (12+ months)
+- partner with insurers, NGOs, and maternal health programs for scaled distribution
+- integrate referral pathways with pharmacy/diagnostics ecosystems
+- pursue county/regional health programs where procurement is viable
+
+## Demand generation
+- education-led content around menstrual, pregnancy, and postpartum care
+- provider referral loops from clinical users to patients
+- community activation via maternal health groups and digital campaigns
+
+## Core GTM metrics
+- pilot-to-paid conversion rate
+- net revenue retention (NRR)
+- monthly active patients and provider activity
+- cost to acquire a facility vs. 12-month contract value
 
 ---
 

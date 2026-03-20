@@ -78,6 +78,14 @@ export default function Home() {
           <p className="mt-4 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-medium">
             ⚕️ Educational support only — seek immediate care for emergencies
           </p>
+          <div className="mt-5">
+            <Link
+              href="/auth"
+              className="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-pink-700 transition hover:bg-pink-50"
+            >
+              Provider access →
+            </Link>
+          </div>
         </section>
 
         {/* Feature cards */}
