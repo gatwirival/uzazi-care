@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AppNav } from "@/components/app-nav";
 
+export const dynamic = "force-dynamic";
+
 export default function ErrorPage() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
